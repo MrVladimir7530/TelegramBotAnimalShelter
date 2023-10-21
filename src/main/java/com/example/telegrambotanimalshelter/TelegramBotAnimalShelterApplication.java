@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TelegramBotAnimalShelterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TelegramBotAnimalShelterApplication.class,  args);
+        SpringApplication.run(TelegramBotAnimalShelterApplication.class, args);
     }
 
 }
