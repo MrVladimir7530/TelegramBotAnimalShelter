@@ -15,7 +15,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @RequiredArgsConstructor
 public class TelegramBot extends TelegramLongPollingBot {
     private Logger log = LoggerFactory.getLogger(TelegramBot.class);
-    private final CommandHandler commandHandler;
+    private final ReallocationOfTeams reallocationOfTeams;
     private final StartMenu startMenu;
     private final ChooseAnimal chooseAnimal;
     private final ChooseWay chooseWay;
@@ -35,7 +35,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
-        prepareAndSendMessage(commandHandler.process(update));
+        prepareAndSendMessage(reallocationOfTeams.process(update));
 
     }
 

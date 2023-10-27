@@ -15,9 +15,20 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class StartMenu {
+public class StartMenu implements CommandHandler{
 
-    public InlineKeyboardMarkup returnInlineKeyboard() {
+
+    @Override
+    public SendMessage process(Update update) {
+        SendMessage message = new SendMessage();
+        message.setChatId(update.getMessage().getChatId());
+        message.setReplyMarkup(createInlineKeyboard());
+        message.setText(createText());
+        return message;
+    }
+
+
+    public InlineKeyboardMarkup createInlineKeyboard() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         InlineKeyboardButton catButton = new InlineKeyboardButton("Приют для кошек");
         InlineKeyboardButton dogButton = new InlineKeyboardButton("Приют для собак");
@@ -40,13 +51,13 @@ public class StartMenu {
         startButtonList.add(reportButtonList);
 
         inlineKeyboardMarkup.setKeyboard(startButtonList);
-        return inlineKeyboardMarkup;
+        return  inlineKeyboardMarkup;
+
 
     }
 
-    public String returnString() {
+    public String createText() {
         return "Привет. Вы находитесь в стартовом меню бота приюта для животных." +
                 " Пожалуйста, выберете приют или нажмите кнопку отправки отчета.";
     }
-
 }
