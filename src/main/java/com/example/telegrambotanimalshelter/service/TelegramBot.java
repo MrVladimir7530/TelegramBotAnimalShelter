@@ -15,12 +15,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @RequiredArgsConstructor
 public class TelegramBot extends TelegramLongPollingBot {
     private Logger log = LoggerFactory.getLogger(TelegramBot.class);
-    private final ChooseAnimal chooseAnimal;
-    private final StartMenu startMenu;
-    private final ChooseWay chooseWay;
     private final BotConfig botConfig;
+    private final Greetings greetings;
     private static final String ERROR = "ERROR: ";
-    private static final String textForCancel = "Вы вернулись в стартовое меню";
     @Override
     public String getBotUsername() {
         return botConfig.getBotName();
@@ -33,23 +30,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        String text = update.getMessage().getText();
-        if (text.equals("/cancel")) {
-            chooseWay.setChooseWay(0);
-            Long chatId = update.getMessage().getChatId();
-            prepareAndSendMessage(chatId, textForCancel);
-            return;
-        }
-        switch (chooseWay.getChooseWay()) {
-            case 0:
-                startMenu.selectRunCommand(update);
-                break;
-            case 1:
-                chooseAnimal.onUpdateReceived(update);
-                break;
-            case 2:
-                break;
-        }
+        greetings.onUpdateReceived(update);
     }
 
     public void prepareAndSendMessage(Long chatId, String textToSend) {

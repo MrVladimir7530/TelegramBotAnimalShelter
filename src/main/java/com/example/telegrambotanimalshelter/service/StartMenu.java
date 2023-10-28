@@ -11,15 +11,18 @@ import org.telegram.telegrambots.meta.bots.*;
 @Service
 @RequiredArgsConstructor
 public class StartMenu {
+    private final TelegramBot telegramBot;
     private final ChooseAnimal chooseAnimal;
     private final ChooseWay chooseWay;
     private static final String ERROR = "Ошибка: ";
     public void selectRunCommand(Update update) {
         String text = update.getMessage().getText();
+        Long chatId = update.getMessage().getChatId();
         switch (text) {
             case "/animal":
                 chooseWay.setChooseWay(1);
                 chooseAnimal.onUpdateReceived(update);
+                telegramBot.prepareAndSendMessage(chatId, "Вы перешли на этап выбора животного");
                 break;
             case "/getInfo":
                 break;
