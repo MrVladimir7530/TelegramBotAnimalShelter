@@ -1,24 +1,25 @@
 package com.example.telegrambotanimalshelter.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private Map<String, CommandHandler> commandHandlerMap = new HashMap<>();
     private final StartMenu startMenu;
     private final AnimalMenu animalMenu;
 
-    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu) {
 
-        this.animalMenu = animalMenu;
-        this.startMenu = startMenu;
-
+    @PostConstruct
+    public void configReallocationOfTeamsImpl() {
         commandHandlerMap.put("/start", startMenu);
         commandHandlerMap.put("/cancel", startMenu);
         commandHandlerMap.put("CAT", animalMenu);
