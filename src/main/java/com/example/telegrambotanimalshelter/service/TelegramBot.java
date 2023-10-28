@@ -17,7 +17,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     private Logger log = LoggerFactory.getLogger(TelegramBot.class);
     private final ReallocationOfTeams reallocationOfTeams;
     private final StartMenu startMenu;
-    private final ChooseAnimal chooseAnimal;
     private final ChooseWay chooseWay;
     private final BotConfig botConfig;
     private static final String ERROR = "ERROR: ";
