@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 /**
- * Сервис для обработки команды /start.
+ * Сервис для обработки команды /start, /cancel
  */
 public class StartMenu implements CommandHandler{
 

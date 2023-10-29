@@ -9,8 +9,14 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Сервис для обработки перераспределения входящих обновлений по сервисам в зависимости от команды.
+ */
 @Service
 public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
+    /**
+     * Коллекция, в которой хранятся команды и сервисы для обработки команд
+     */
     private final Map<String, CommandHandler> commandHandlerMap = new HashMap<>();
     private final StartMenu startMenu;
     private final AnimalMenu animalMenu;
@@ -26,6 +32,11 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("DOG", animalMenu);
     }
 
+    /**
+     * Метод для распределения обновлений по сервисам. Возвращает сообщение для отправки пользователю.
+     * @param update
+     * @return SendMessage
+     */
     @Override
     public SendMessage process(Update update) {
         SendMessage message = new SendMessage();
