@@ -24,28 +24,39 @@ public class StartMenu implements CommandHandler{
         return message;
     }
 
+    public String check(Update update) {
+        switch (update.getMessage().getText()) {
+        }
+        return null;
+    }
 
     public InlineKeyboardMarkup createInlineKeyboard() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        InlineKeyboardButton catButton = new InlineKeyboardButton("Приют для кошек");
-        InlineKeyboardButton dogButton = new InlineKeyboardButton("Приют для собак");
+//        InlineKeyboardButton catButton = new InlineKeyboardButton("Приют для кошек");
+//        InlineKeyboardButton dogButton = new InlineKeyboardButton("Приют для собак");
         InlineKeyboardButton reportButton = new InlineKeyboardButton("Отправить отчет");
+        InlineKeyboardButton choiceOfAnimalButton = new InlineKeyboardButton("Выбрать животное");
 
-        catButton.setCallbackData("CAT");
-        dogButton.setCallbackData("DOG");
+//        catButton.setCallbackData("CAT");
+//        dogButton.setCallbackData("DOG");
         reportButton.setCallbackData("REPORT");
+        choiceOfAnimalButton.setCallbackData("/choiceOfAnimal");
 
-        List<InlineKeyboardButton> catButtonList = new ArrayList<>();
-        catButtonList.add(catButton);
-        List<InlineKeyboardButton> dogButtonList = new ArrayList<>();
-        dogButtonList.add(dogButton);
+//        List<InlineKeyboardButton> catButtonList = new ArrayList<>();
+//        catButtonList.add(catButton);
+//        List<InlineKeyboardButton> dogButtonList = new ArrayList<>();
+//        dogButtonList.add(dogButton);
         List<InlineKeyboardButton> reportButtonList = new ArrayList<>();
         reportButtonList.add(reportButton);
 
+        List<InlineKeyboardButton> choiceButtonList = new ArrayList<>();
+        choiceButtonList.add(choiceOfAnimalButton);
+
         List<List<InlineKeyboardButton>> startButtonList = new ArrayList<>();
-        startButtonList.add(catButtonList);
-        startButtonList.add(dogButtonList);
+//        startButtonList.add(catButtonList);
+//        startButtonList.add(dogButtonList);
         startButtonList.add(reportButtonList);
+        startButtonList.add(choiceButtonList);
 
         inlineKeyboardMarkup.setKeyboard(startButtonList);
         return  inlineKeyboardMarkup;
