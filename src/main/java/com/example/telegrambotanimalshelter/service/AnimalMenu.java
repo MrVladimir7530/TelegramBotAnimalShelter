@@ -1,5 +1,7 @@
 package com.example.telegrambotanimalshelter.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -14,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class AnimalMenu implements CommandHandler {
+    Logger log = LoggerFactory.getLogger(AnimalMenu.class);
 
     /**
      * Метод для обработки входящего обновления и возврата сообщения
@@ -22,6 +25,8 @@ public class AnimalMenu implements CommandHandler {
      */
     @Override
     public SendMessage process(Update update) {
+        log.info("The process method of the AnimalMenu class was called"+"CallBackData = "
+                +update.getCallbackQuery().getData()+" "+update.getCallbackQuery().getMessage().getText());
         SendMessage message = new SendMessage();
         message.setChatId(update.getCallbackQuery().getFrom().getId());
         message.setReplyMarkup(createKeyboardMarkup(update));

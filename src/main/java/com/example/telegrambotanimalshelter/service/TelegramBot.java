@@ -3,6 +3,7 @@ package com.example.telegrambotanimalshelter.service;
 import com.example.telegrambotanimalshelter.component.ChooseWay;
 import com.example.telegrambotanimalshelter.config.BotConfig;
 import lombok.RequiredArgsConstructor;
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
+        log.info("Processing update: {}", update);
 
         prepareAndSendMessage(reallocationOfTeams.process(update));
 
@@ -43,6 +45,7 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         try {
             execute(message);
+            log.info(String.valueOf(HttpStatus.SC_OK));
         } catch (TelegramApiException e) {
             log.error(ERROR, e);
         }
