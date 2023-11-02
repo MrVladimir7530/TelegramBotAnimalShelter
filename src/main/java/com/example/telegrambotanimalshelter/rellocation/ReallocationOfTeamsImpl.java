@@ -26,8 +26,10 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("/start", startMenu);
         commandHandlerMap.put("/cancel", startMenu);
         commandHandlerMap.put("CAT", animalMenu);
-        commandHandlerMap.put("infoGetAnimal", shelterInformationService);
-        commandHandlerMap.put("infoNeedDocumentation", shelterInformationService);
+        commandHandlerMap.put("How_to_take_an_animal", shelterInformationService);
+        commandHandlerMap.put("INFO_GET_ANIMAL", shelterInformationService);
+        commandHandlerMap.put("INFO_NEED_DOCUMENTATION", shelterInformationService);
+        commandHandlerMap.put("HELP_WITH_TRANSPORTATION_ANIMAL", shelterInformationService);
     }
 
     @Override
