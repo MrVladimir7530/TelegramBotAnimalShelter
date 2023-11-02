@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,10 +31,15 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         this.animalMenu = animalMenu;
         this.startMenu = startMenu;
 
+
+    }
+    @PostConstruct
+    public void init() {
         commandHandlerMap.put("/start", startMenu);
         commandHandlerMap.put("/cancel", startMenu);
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
+
     }
 
     /**
