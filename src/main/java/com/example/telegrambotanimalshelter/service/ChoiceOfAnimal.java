@@ -8,13 +8,12 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class StartMenu implements CommandHandler{
-
-
+public class ChoiceOfAnimal implements CommandHandler{
     @Override
     public SendMessage process(Update update) {
         SendMessage message = new SendMessage();
@@ -24,37 +23,23 @@ public class StartMenu implements CommandHandler{
         return message;
     }
 
-
     public InlineKeyboardMarkup createInlineKeyboard() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         InlineKeyboardButton catButton = new InlineKeyboardButton("Приют для кошек");
         InlineKeyboardButton dogButton = new InlineKeyboardButton("Приют для собак");
-        InlineKeyboardButton reportButton = new InlineKeyboardButton("Отправить отчет");
 
         catButton.setCallbackData("CAT");
         dogButton.setCallbackData("DOG");
-        reportButton.setCallbackData("REPORT");
 
-        List<InlineKeyboardButton> catButtonList = new ArrayList<>();
-        catButtonList.add(catButton);
-        List<InlineKeyboardButton> dogButtonList = new ArrayList<>();
-        dogButtonList.add(dogButton);
-        List<InlineKeyboardButton> reportButtonList = new ArrayList<>();
-        reportButtonList.add(reportButton);
+        List<InlineKeyboardButton> choiceOfAnimalButton = new ArrayList<>();
+        choiceOfAnimalButton.add(catButton);
+        choiceOfAnimalButton.add(dogButton);
 
-        List<List<InlineKeyboardButton>> startButtonList = new ArrayList<>();
-        startButtonList.add(catButtonList);
-        startButtonList.add(dogButtonList);
-        startButtonList.add(reportButtonList);
-
-        inlineKeyboardMarkup.setKeyboard(startButtonList);
-        return  inlineKeyboardMarkup;
-
-
+        inlineKeyboardMarkup.setKeyboard(Collections.singletonList(choiceOfAnimalButton));
+        return inlineKeyboardMarkup;
     }
 
     public String createText() {
-        return "Привет. Вы находитесь в стартовом меню бота приюта для животных." +
-                " Пожалуйста, выберете приют или нажмите кнопку отправки отчета.";
+        return "Привет. Вы находитесь на стадии выбора животного.";
     }
 }

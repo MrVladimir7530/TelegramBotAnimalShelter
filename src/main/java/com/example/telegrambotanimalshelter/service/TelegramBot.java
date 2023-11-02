@@ -1,7 +1,7 @@
 package com.example.telegrambotanimalshelter.service;
 
-import com.example.telegrambotanimalshelter.component.ChooseWay;
 import com.example.telegrambotanimalshelter.config.BotConfig;
+import com.example.telegrambotanimalshelter.rellocation.ReallocationOfTeams;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
