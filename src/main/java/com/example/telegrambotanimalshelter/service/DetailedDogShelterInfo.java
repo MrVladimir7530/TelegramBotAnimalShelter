@@ -1,6 +1,5 @@
 package com.example.telegrambotanimalshelter.service;
 
-import com.example.telegrambotanimalshelter.model.Animal;
 import com.example.telegrambotanimalshelter.model.Shelter;
 import com.example.telegrambotanimalshelter.repository.ShelterRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,19 +10,19 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 
 @Service
 @Slf4j
-public class DetailedShelterInfo implements CommandHandler {
+public class DetailedDogShelterInfo implements CommandHandler {
     @Autowired
     private ShelterRepository shelterRepository;
 
     /**
      * Метод для обработки входящего сообщения от пользователя и возврата сообщения для отправки
-     * Меню подробной информации о приютах
+     * Меню подробной информации о приюте собак
      * @param update
      * @return SendMessage
      */
     @Override
     public SendMessage process(Update update) {
-        log.info("The process method of DetailedShelterInfo was called");
+        log.info("The process method of DetailedDogShelterInfo was called");
 
         SendMessage message = new SendMessage();
 
@@ -40,32 +39,19 @@ public class DetailedShelterInfo implements CommandHandler {
      */
     private String getInfoAboutShelter(Update update) {
         String textMessage;
-
-        String animal;
-        if (update.getCallbackQuery().getData().contains("CAT")) {
-            animal = "cat";
-        } else animal = "dog";
-
+        String animal = "dog";
         Shelter shelter = shelterRepository.findByTextKey(animal);
 
-//        if (update.getCallbackQuery().getData().contains("CAT")) {
-//            shelter = shelterRepository.findByTextKey("cat");
-//        } else shelter = shelterRepository.findByTextKey("dog");
-
         switch (update.getCallbackQuery().getData()) {
-            case "GENERAL_INFO_ABOUT_CAT_SHELTER":
             case "GENERAL_INFO_ABOUT_DOG_SHELTER":
                 textMessage = shelter.getGeneralInfo();
                 break;
-            case "ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER":
             case "ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER":
                 textMessage = shelter.getInfo();
                 break;
-            case "SECURITY_INFO_OF_CAT_SHELTER":
             case "SECURITY_INFO_OF_DOG_SHELTER":
                 textMessage = shelter.getSecurityContact();
                 break;
-            case "CAT_SAFETY_RECOMMENDATIONS":
             case "DOG_SAFETY_RECOMMENDATIONS":
                 textMessage = shelter.getSafetyPrecautions();
                 break;

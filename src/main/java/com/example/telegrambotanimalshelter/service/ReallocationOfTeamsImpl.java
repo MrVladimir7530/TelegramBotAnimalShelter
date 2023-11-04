@@ -23,16 +23,17 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private final StartMenu startMenu;
     private final AnimalMenu animalMenu;
     private final GeneralShelterInfoMenu generalShelterInfoMenu;
+    private final DetailedCatShelterInfo detailedCatShelterInfo;
+    private final DetailedDogShelterInfo detailedDogShelterInfo;
 
-    private final DetailedShelterInfo detailedShelterInfo;
-
-    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu, GeneralShelterInfoMenu generalShelterInfoMenu, DetailedShelterInfo detailedShelterInfo) {
+    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu, GeneralShelterInfoMenu generalShelterInfoMenu, DetailedCatShelterInfo detailedCatShelterInfo, DetailedDogShelterInfo detailedDogShelterInfo) {
 
 
         this.animalMenu = animalMenu;
         this.startMenu = startMenu;
         this.generalShelterInfoMenu = generalShelterInfoMenu;
-        this.detailedShelterInfo = detailedShelterInfo;
+        this.detailedCatShelterInfo = detailedCatShelterInfo;
+        this.detailedDogShelterInfo = detailedDogShelterInfo;
 
         commandHandlerMap.put("/start", startMenu);
         commandHandlerMap.put("/cancel", startMenu);
@@ -42,14 +43,15 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("CAT_INFO", generalShelterInfoMenu);
         commandHandlerMap.put("DOG_INFO", generalShelterInfoMenu);
 
-        commandHandlerMap.put("GENERAL_INFO_ABOUT_CAT_SHELTER", detailedShelterInfo);
-        commandHandlerMap.put("GENERAL_INFO_ABOUT_DOG_SHELTER", detailedShelterInfo);
-        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER", detailedShelterInfo);
-        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER", detailedShelterInfo);
-        commandHandlerMap.put("SECURITY_INFO_OF_CAT_SHELTER", detailedShelterInfo);
-        commandHandlerMap.put("SECURITY_INFO_OF_DOG_SHELTER", detailedShelterInfo);
-        commandHandlerMap.put("CAT_SAFETY_RECOMMENDATIONS", detailedShelterInfo);
-        commandHandlerMap.put("DOG_SAFETY_RECOMMENDATIONS", detailedShelterInfo);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_CAT_SHELTER", detailedCatShelterInfo);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER", detailedCatShelterInfo);
+        commandHandlerMap.put("SECURITY_INFO_OF_CAT_SHELTER", detailedCatShelterInfo);
+        commandHandlerMap.put("CAT_SAFETY_RECOMMENDATIONS", detailedCatShelterInfo);
+
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_DOG_SHELTER", detailedDogShelterInfo);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER", detailedDogShelterInfo);
+        commandHandlerMap.put("SECURITY_INFO_OF_DOG_SHELTER", detailedDogShelterInfo);
+        commandHandlerMap.put("DOG_SAFETY_RECOMMENDATIONS", detailedDogShelterInfo);
 
     }
 
