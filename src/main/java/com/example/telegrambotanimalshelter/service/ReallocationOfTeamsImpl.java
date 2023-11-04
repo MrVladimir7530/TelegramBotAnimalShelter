@@ -1,6 +1,5 @@
 package com.example.telegrambotanimalshelter.service;
 
-import com.example.telegrambotanimalshelter.CommandEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,17 +22,23 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private Logger log = LoggerFactory.getLogger(ReallocationOfTeamsImpl.class);
     private final StartMenu startMenu;
     private final AnimalMenu animalMenu;
+    private final GeneralShelterInfoMenu generalShelterInfoMenu;
 
-    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu) {
+    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu, GeneralShelterInfoMenu generalShelterInfoMenu) {
 
 
         this.animalMenu = animalMenu;
         this.startMenu = startMenu;
+        this.generalShelterInfoMenu = generalShelterInfoMenu;
 
         commandHandlerMap.put("/start", startMenu);
         commandHandlerMap.put("/cancel", startMenu);
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
+
+        commandHandlerMap.put("CAT_INFO", generalShelterInfoMenu);
+        commandHandlerMap.put("DOG_INFO", generalShelterInfoMenu);
+
     }
 
     /**
