@@ -10,7 +10,6 @@ public class Shelter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-
     private String textKey; // текстовый ключ cat,dog
     private String name; // приют кошек, приют собак
     private String generalInfo; //общая информация о приюте
@@ -26,6 +25,14 @@ public class Shelter {
 
     public Shelter(String name) {
         this.name = name;
+    }
+
+    public String getTextKey() {
+        return textKey;
+    }
+
+    public void setTextKey(String textKey) {
+        this.textKey = textKey;
     }
 
     public Long getId() {

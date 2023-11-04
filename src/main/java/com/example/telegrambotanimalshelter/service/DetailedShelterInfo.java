@@ -43,7 +43,8 @@ public class DetailedShelterInfo implements CommandHandler {
 
         String textMessage;
 
-        Shelter shelter = new Shelter();
+        Shelter shelter;// = new Shelter();
+
         if (update.getCallbackQuery().getData().contains("CAT")) {
             shelter = shelterRepository.findByTextKey("cat");
         } else shelter = shelterRepository.findByTextKey("dog");
