@@ -27,6 +27,16 @@ public class Shelter {
         this.name = name;
     }
 
+    public Shelter(String textKey, String name, String generalInfo, String info, String securityContact, String safetyPrecautions, Set<Animal> animals) {
+        this.textKey = textKey;
+        this.name = name;
+        this.generalInfo = generalInfo;
+        this.info = info;
+        this.securityContact = securityContact;
+        this.safetyPrecautions = safetyPrecautions;
+        this.animals = animals;
+    }
+
     public String getTextKey() {
         return textKey;
     }

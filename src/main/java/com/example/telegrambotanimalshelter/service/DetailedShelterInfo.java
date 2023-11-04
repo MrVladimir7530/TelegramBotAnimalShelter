@@ -1,5 +1,6 @@
 package com.example.telegrambotanimalshelter.service;
 
+import com.example.telegrambotanimalshelter.model.Animal;
 import com.example.telegrambotanimalshelter.model.Shelter;
 import com.example.telegrambotanimalshelter.repository.ShelterRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Service
 @Slf4j
 public class DetailedShelterInfo implements CommandHandler {
-
     @Autowired
     private ShelterRepository shelterRepository;
 
@@ -39,15 +39,18 @@ public class DetailedShelterInfo implements CommandHandler {
      * @return String
      */
     private String getInfoAboutShelter(Update update) {
-        log.info("Method getInfoAboutShelter of DetailedShelterInfo was called");
-
         String textMessage;
 
-        Shelter shelter;// = new Shelter();
-
+        String animal;
         if (update.getCallbackQuery().getData().contains("CAT")) {
-            shelter = shelterRepository.findByTextKey("cat");
-        } else shelter = shelterRepository.findByTextKey("dog");
+            animal = "cat";
+        } else animal = "dog";
+
+        Shelter shelter = shelterRepository.findByTextKey(animal);
+
+//        if (update.getCallbackQuery().getData().contains("CAT")) {
+//            shelter = shelterRepository.findByTextKey("cat");
+//        } else shelter = shelterRepository.findByTextKey("dog");
 
         switch (update.getCallbackQuery().getData()) {
             case "GENERAL_INFO_ABOUT_CAT_SHELTER":

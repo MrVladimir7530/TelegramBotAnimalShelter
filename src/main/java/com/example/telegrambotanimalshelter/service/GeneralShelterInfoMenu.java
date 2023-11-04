@@ -1,6 +1,9 @@
 package com.example.telegrambotanimalshelter.service;
 
+import com.example.telegrambotanimalshelter.model.Animal;
+import com.example.telegrambotanimalshelter.model.Shelter;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -10,6 +13,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис для обработки команд общей информации о приютах
+ */
 @Service
 @Slf4j
 public class GeneralShelterInfoMenu implements CommandHandler {
@@ -17,6 +23,7 @@ public class GeneralShelterInfoMenu implements CommandHandler {
     /**
      * Метод для обработки входящего сообщения от пользователя и возврата сообщения для отправки
      * Меню общей информации о приютах
+     *
      * @param update
      * @return SendMessage
      */
@@ -34,6 +41,7 @@ public class GeneralShelterInfoMenu implements CommandHandler {
 
     /**
      * Метод для создания и возврата виртуальной клавиутары
+     *
      * @param update
      * @return InlineKeyboardMarkup
      */
@@ -92,6 +100,7 @@ public class GeneralShelterInfoMenu implements CommandHandler {
 
         return inlineKeyboardMarkup;
     }
+
     private String createText() {
         String text;
         text = "Вы находитесь с разделе общей информации о приюте. Пожалуйста, выберите, о чем вы бы хотели узнать подробнее";
