@@ -28,9 +28,9 @@ public class DetailedShelterInfo implements CommandHandler {
         SendMessage message = new SendMessage();
 
         message.setChatId(update.getCallbackQuery().getFrom().getId());
+        message.setText(getInfoAboutShelter(update));
 
-
-        return null;
+        return message;
     }
 
     /**
