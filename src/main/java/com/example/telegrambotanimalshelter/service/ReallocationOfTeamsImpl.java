@@ -42,14 +42,14 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("CAT_INFO", generalShelterInfoMenu);
         commandHandlerMap.put("DOG_INFO", generalShelterInfoMenu);
 
-        commandHandlerMap.put("GeneralInfoAboutCatShelter", detailedShelterInfo);
-        commandHandlerMap.put("GeneralInfoAboutDogShelter", detailedShelterInfo);
-        commandHandlerMap.put("AddressAndScheduleOfCatShelter", detailedShelterInfo);
-        commandHandlerMap.put("AddressAndScheduleOfDogShelter", detailedShelterInfo);
-        commandHandlerMap.put("SecurityInfoOfCatShelter", detailedShelterInfo);
-        commandHandlerMap.put("SecurityInfoOfDogShelter", detailedShelterInfo);
-        commandHandlerMap.put("CatSafetyRecommendations", detailedShelterInfo);
-        commandHandlerMap.put("DogSafetyRecommendations", detailedShelterInfo);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_CAT_SHELTER", detailedShelterInfo);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_DOG_SHELTER", detailedShelterInfo);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER", detailedShelterInfo);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER", detailedShelterInfo);
+        commandHandlerMap.put("SECURITY_INFO_OF_CAT_SHELTER", detailedShelterInfo);
+        commandHandlerMap.put("SECURITY_INFO_OF_DOG_SHELTER", detailedShelterInfo);
+        commandHandlerMap.put("CAT_SAFETY_RECOMMENDATIONS", detailedShelterInfo);
+        commandHandlerMap.put("DOG_SAFETY_RECOMMENDATIONS", detailedShelterInfo);
 
     }
 

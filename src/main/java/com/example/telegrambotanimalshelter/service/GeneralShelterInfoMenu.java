@@ -49,15 +49,15 @@ public class GeneralShelterInfoMenu implements CommandHandler {
 
         // в названии кнопки обязательно использовать Cat или Dog !!
         if (update.getCallbackQuery().getData().equals("CAT_INFO")) {
-            generalInfoAboutShelter.setCallbackData("GeneralInfoAboutCatShelter");
-            addressAndScheduleOfShelter.setCallbackData("AddressAndScheduleOfCatShelter");
-            contactInfoOfShelterSecurity.setCallbackData("SecurityInfoOfCatShelter");
-            generalSafetyRecommendations.setCallbackData("CatSafetyRecommendations");
+            generalInfoAboutShelter.setCallbackData("GENERAL_INFO_ABOUT_CAT_SHELTER");
+            addressAndScheduleOfShelter.setCallbackData("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER");
+            contactInfoOfShelterSecurity.setCallbackData("SECURITY_INFO_OF_CAT_SHELTER");
+            generalSafetyRecommendations.setCallbackData("CAT_SAFETY_RECOMMENDATIONS");
         } else {
-            generalInfoAboutShelter.setCallbackData("GeneralInfoAboutDogShelter");
-            addressAndScheduleOfShelter.setCallbackData("AddressAndScheduleOfDogShelter");
-            contactInfoOfShelterSecurity.setCallbackData("SecurityInfoOfDogShelter");
-            generalSafetyRecommendations.setCallbackData("DogSafetyRecommendations");
+            generalInfoAboutShelter.setCallbackData("GENERAL_INFO_ABOUT_DOG_SHELTER");
+            addressAndScheduleOfShelter.setCallbackData("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER");
+            contactInfoOfShelterSecurity.setCallbackData("SECURITY_INFO_OF_DOG_SHELTER");
+            generalSafetyRecommendations.setCallbackData("DOG_SAFETY_RECOMMENDATIONS");
         }
         getAndSaveContactInfoAboutUser.setCallbackData("UserContacts");
         callVolunteer.setCallbackData("Call_Volunteer");

@@ -44,25 +44,25 @@ public class DetailedShelterInfo implements CommandHandler {
         String textMessage;
 
         Shelter shelter = new Shelter();
-        if (update.getCallbackQuery().getData().contains("Cat")) {
+        if (update.getCallbackQuery().getData().contains("CAT")) {
             shelter = shelterRepository.findByTextKey("cat");
         } else shelter = shelterRepository.findByTextKey("dog");
 
         switch (update.getCallbackQuery().getData()) {
-            case "GeneralInfoAboutCatShelter":
-            case "GeneralInfoAboutDogShelter":
+            case "GENERAL_INFO_ABOUT_CAT_SHELTER":
+            case "GENERAL_INFO_ABOUT_DOG_SHELTER":
                 textMessage = shelter.getGeneralInfo();
                 break;
-            case "AddressAndScheduleOfCatShelter":
-            case "AddressAndScheduleOfDogShelter":
+            case "ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER":
+            case "ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER":
                 textMessage = shelter.getInfo();
                 break;
-            case "SecurityInfoOfCatShelter":
-            case "SecurityInfoOfDogShelter":
+            case "SECURITY_INFO_OF_CAT_SHELTER":
+            case "SECURITY_INFO_OF_DOG_SHELTER":
                 textMessage = shelter.getSecurityContact();
                 break;
-            case "CatSafetyRecommendations":
-            case "DogSafetyRecommendations":
+            case "CAT_SAFETY_RECOMMENDATIONS":
+            case "DOG_SAFETY_RECOMMENDATIONS":
                 textMessage = shelter.getSafetyPrecautions();
                 break;
             default:
