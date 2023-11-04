@@ -10,11 +10,13 @@ public class Shelter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    private String name;
-    private String generalInfo;
-    private String info;
-    private String securityContact;
-    private String safetyPrecautions;
+
+    private String textKey; // текстовый ключ cat,dog
+    private String name; // приют кошек, приют собак
+    private String generalInfo; //общая информация о приюте
+    private String info; //адрес, расписание
+    private String securityContact; //контакты охраны
+    private String safetyPrecautions; //техника безопасности
     @OneToMany(mappedBy = "shelter")
     @JsonIgnore
     private Set<Animal> animals;

@@ -24,12 +24,15 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private final AnimalMenu animalMenu;
     private final GeneralShelterInfoMenu generalShelterInfoMenu;
 
-    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu, GeneralShelterInfoMenu generalShelterInfoMenu) {
+    private final DetailedShelterInfo detailedShelterInfo;
+
+    public ReallocationOfTeamsImpl(StartMenu startMenu, AnimalMenu animalMenu, GeneralShelterInfoMenu generalShelterInfoMenu, DetailedShelterInfo detailedShelterInfo) {
 
 
         this.animalMenu = animalMenu;
         this.startMenu = startMenu;
         this.generalShelterInfoMenu = generalShelterInfoMenu;
+        this.detailedShelterInfo = detailedShelterInfo;
 
         commandHandlerMap.put("/start", startMenu);
         commandHandlerMap.put("/cancel", startMenu);
@@ -38,6 +41,15 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
 
         commandHandlerMap.put("CAT_INFO", generalShelterInfoMenu);
         commandHandlerMap.put("DOG_INFO", generalShelterInfoMenu);
+
+        commandHandlerMap.put("GeneralInfoAboutCatShelter", detailedShelterInfo);
+        commandHandlerMap.put("GeneralInfoAboutDogShelter", detailedShelterInfo);
+        commandHandlerMap.put("AddressAndScheduleOfCatShelter", detailedShelterInfo);
+        commandHandlerMap.put("AddressAndScheduleOfDogShelter", detailedShelterInfo);
+        commandHandlerMap.put("SecurityInfoOfCatShelter", detailedShelterInfo);
+        commandHandlerMap.put("SecurityInfoOfDogShelter", detailedShelterInfo);
+        commandHandlerMap.put("CatSafetyRecommendations", detailedShelterInfo);
+        commandHandlerMap.put("DogSafetyRecommendations", detailedShelterInfo);
 
     }
 

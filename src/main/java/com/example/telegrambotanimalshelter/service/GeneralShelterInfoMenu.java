@@ -47,6 +47,7 @@ public class GeneralShelterInfoMenu implements CommandHandler {
         InlineKeyboardButton getAndSaveContactInfoAboutUser = new InlineKeyboardButton("Оставить контакты для обратной связи");
         InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
 
+        // в названии кнопки обязательно использовать Cat или Dog !!
         if (update.getCallbackQuery().getData().equals("CAT_INFO")) {
             generalInfoAboutShelter.setCallbackData("GeneralInfoAboutCatShelter");
             addressAndScheduleOfShelter.setCallbackData("AddressAndScheduleOfCatShelter");

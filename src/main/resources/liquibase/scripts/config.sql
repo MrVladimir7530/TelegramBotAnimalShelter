@@ -27,3 +27,5 @@ safetyPrecautions text
 
 );
 
+-- changeset AlexandraGlinka:4
+alter table Shelter add column textKey text;
