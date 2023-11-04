@@ -1,6 +1,5 @@
 package com.example.telegrambotanimalshelter.service;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -13,21 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@PropertySource("getInfo.text")
-public class ShelterInformationService implements CommandHandler {
+@PropertySource(value = "getInfoAboutDog.text", encoding = "UTF-8")
+public class ShelterInformationCatService implements CommandHandler{
     private String EXCEPTION = "Ошибка команды, пожалуйста повторите действие";
-    private final String INFO_GET_ANIMAL = "INFO_GET_ANIMAL";
-    private final String INFO_NEED_DOCUMENTATION = "INFO_NEED_DOCUMENTATION";
-    private final String WELCOME_MESSAGE_INFO = "WELCOME_MESSAGE_INFO";
-    private final String HELP_WITH_TRANSPORTATION_ANIMAL = "HELP_WITH_TRANSPORTATION_ANIMAL";
-    @Value("${How_to_take_an_animal}")
-    private String How_to_take_an_animal;
-    @Value("${INFO_GET_ANIMAL_ANSWER}")
-    private String INFO_GET_ANIMAL_ANSWER;
-    @Value("${INFO_NEED_DOCUMENTATION_ANSWER}")
-    private String INFO_NEED_DOCUMENTATION_ANSWER;
-    @Value("${HELP_WITH_TRANSPORTATION_ANIMAL_ANSWER}")
-    private String HELP_WITH_TRANSPORTATION_ANIMAL_ANSWER;
+    private final String HOW_TO_TAKE_CAT = "HOW_TO_TAKE_CAT";
+    private final String INFO_GET_CAT = "INFO_GET_CAT";
+    private final String INFO_NEED_DOCUMENTATION_FOR_CAT = "INFO_NEED_DOCUMENTATION_FOR_CAT";
+    private final String HELP_WITH_TRANSPORTATION_CAT = "HELP_WITH_TRANSPORTATION_CAT";
+    @Value("${HOW_TO_TAKE_DOG_ANSWER}")
+    private String HOW_TO_TAKE_CAT_ANSWER;
+    @Value("${INFO_GET_DOG_ANSWER}")
+    private String INFO_GET_CAT_ANSWER;
+    @Value("${INFO_NEED_DOCUMENTATION_FOR_DOG_ANSWER}")
+    private String INFO_NEED_DOCUMENTATION_FOR_CAT_ANSWER;
+    @Value("${HELP_WITH_TRANSPORTATION_DOG_ANSWER}")
+    private String HELP_WITH_TRANSPORTATION_CAT_ANSWER;
 
     @Override
     public SendMessage process(Update update) {
@@ -41,13 +40,13 @@ public class ShelterInformationService implements CommandHandler {
 
     public InlineKeyboardMarkup createInlineKeyboard() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        InlineKeyboardButton infoGetAnimal = new InlineKeyboardButton("Как забрать животное");
-        InlineKeyboardButton infoNeedDocumentation = new InlineKeyboardButton("Список документов для получения животного");
-        InlineKeyboardButton helpWithTransportationAnimal = new InlineKeyboardButton("Как правильно транспортировать животное");
+        InlineKeyboardButton infoGetAnimal = new InlineKeyboardButton("Как забрать кошку");
+        InlineKeyboardButton infoNeedDocumentation = new InlineKeyboardButton("Список документов для получения кошки");
+        InlineKeyboardButton helpWithTransportationAnimal = new InlineKeyboardButton("Как правильно транспортировать кошку");
 
-        infoGetAnimal.setCallbackData(INFO_GET_ANIMAL);
-        infoNeedDocumentation.setCallbackData(INFO_NEED_DOCUMENTATION);
-        helpWithTransportationAnimal.setCallbackData(HELP_WITH_TRANSPORTATION_ANIMAL);
+        infoGetAnimal.setCallbackData(INFO_GET_CAT);
+        infoNeedDocumentation.setCallbackData(INFO_NEED_DOCUMENTATION_FOR_CAT);
+        helpWithTransportationAnimal.setCallbackData(HELP_WITH_TRANSPORTATION_CAT);
 
         List<InlineKeyboardButton> infoGetAnimalList = new ArrayList<>();
         List<InlineKeyboardButton> infoNeedDocumentationList = new ArrayList<>();
@@ -69,14 +68,14 @@ public class ShelterInformationService implements CommandHandler {
     public String choiceWay(Update update) {
         String text = update.getCallbackQuery().getData();
         switch (text) {
-            case WELCOME_MESSAGE_INFO:
-                return How_to_take_an_animal;
-            case INFO_GET_ANIMAL:
-                return INFO_GET_ANIMAL_ANSWER;
-            case INFO_NEED_DOCUMENTATION:
-                return INFO_NEED_DOCUMENTATION_ANSWER;
-            case HELP_WITH_TRANSPORTATION_ANIMAL:
-                return HELP_WITH_TRANSPORTATION_ANIMAL_ANSWER;
+            case HOW_TO_TAKE_CAT:
+                return HOW_TO_TAKE_CAT_ANSWER;
+            case INFO_GET_CAT:
+                return INFO_GET_CAT_ANSWER;
+            case INFO_NEED_DOCUMENTATION_FOR_CAT:
+                return INFO_NEED_DOCUMENTATION_FOR_CAT_ANSWER;
+            case HELP_WITH_TRANSPORTATION_CAT:
+                return HELP_WITH_TRANSPORTATION_CAT_ANSWER;
             default:
                 return EXCEPTION;
         }
