@@ -28,7 +28,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private final AnimalMenu animalMenu;
     private final ShelterInformationDogService shelterInformationDogService;
     private final ShelterInformationCatService shelterInformationCatService;
-
+    private final ReportButtonAnswerService reportButtonAnswerService;
 
     @PostConstruct
     public void init() {
@@ -36,6 +36,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("/cancel", startMenu);
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
+        commandHandlerMap.put("REPORT", reportButtonAnswerService);
 
         commandHandlerMap.put("HOW_TO_TAKE_CAT", shelterInformationCatService);
         commandHandlerMap.put("INFO_GET_CAT", shelterInformationCatService);
