@@ -1,29 +1,33 @@
 --liquibase formatted sql
--- changeset IlyaAfanasev:1
-create table Subscriber(
-id serial primary key,
-chat_id bigint,
+
+--changeset IlyaAfanasev:create_table_Subscriber
+create table if not exists subscriber(
+chat_id bigint primary key,
 name varchar(255),
+phone_number varchar(255),
 user_name varchar(255)
-
 );
 
--- changeset IlyaAfanasev:2
-create table Animal(
-id serial primary key,
+--changeset IlyaAfanasev:create_table_Shelter
+create table if not exists shelter(
+id bigserial primary key,
 name varchar(255),
-shelter_id bigint,
-user_id bigint
-
-);
--- changeset IlyaAfanasev:3
-create table Shelter(
-id serial primary key,
-name varchar(255),
-generalInfo text,
+general_info text,
 info text,
-securityContact text,
-safetyPrecautions text
-
+security_contact text,
+safety_precautions text
 );
+
+--changeset IlyaAfanasev:create_table_Animal
+create table if not exists animal(
+id bigserial primary key,
+name varchar(255),
+breed varchar(255),
+shelter_id bigint not null,
+subscriber_id bigint not null,
+foreign key (shelter_id) references shelter (id),
+foreign key (subscriber_id) references subscriber (chat_id)
+);
+
+
 
