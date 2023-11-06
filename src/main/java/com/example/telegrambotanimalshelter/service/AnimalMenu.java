@@ -49,12 +49,13 @@ public class AnimalMenu implements CommandHandler {
 
         if (update.getCallbackQuery().getData().equals("CAT")) {
             getInfoAboutShelter.setCallbackData("CAT_INFO");
+            informationAboutAnimalAdoption.setCallbackData("HOW_TO_TAKE_CAT");
 
         } else {
 
             getInfoAboutShelter.setCallbackData("DOG_INFO");
+            informationAboutAnimalAdoption.setCallbackData("HOW_TO_TAKE_DOG");
         }
-        informationAboutAnimalAdoption.setCallbackData("How_to_take_an_animal");
         callVolunteer.setCallbackData("Call_Volunteer");
 
         List<InlineKeyboardButton> catButtonList = new ArrayList<>();

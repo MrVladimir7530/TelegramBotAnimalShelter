@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SubscriberRepository extends JpaRepository<Subscriber, Long> {
 
-    Subscriber findByUserName(String userName);
+    Subscriber findByChatId(Long chatId);
 }

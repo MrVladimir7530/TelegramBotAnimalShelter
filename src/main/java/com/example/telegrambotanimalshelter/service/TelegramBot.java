@@ -1,7 +1,7 @@
 package com.example.telegrambotanimalshelter.service;
 
-import com.example.telegrambotanimalshelter.component.ChooseWay;
 import com.example.telegrambotanimalshelter.config.BotConfig;
+import com.example.telegrambotanimalshelter.rellocation.ReallocationOfTeams;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
@@ -18,8 +18,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     private Logger log = LoggerFactory.getLogger(TelegramBot.class);
     private final ReallocationOfTeams reallocationOfTeams;
     private final StartMenu startMenu;
-    private final ChooseAnimal chooseAnimal;
-    private final ChooseWay chooseWay;
     private final BotConfig botConfig;
     private static final String ERROR = "ERROR: ";
     private static final String textForCancel = "Вы вернулись в стартовое меню";

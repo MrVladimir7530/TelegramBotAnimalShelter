@@ -15,12 +15,13 @@ public class SubscriberServiceImpl implements SubscriberService {
         this.subscriberRepository = subscriberRepository;
     }
     @Override
-    public Subscriber create(Subscriber subscriber) {
+    public boolean create(Subscriber subscriber) {
         logger.info("The create method of the SubscriberServiceImpl class was called");
-        if (subscriberRepository.findByUserName(subscriber.getUserName())!=null) {
-            return null;
+        if (subscriberRepository.findByChatId(subscriber.getChatId()) != null) {
+            return false;
         }
-        return subscriberRepository.save(subscriber);
+        subscriberRepository.save(subscriber);
+        return true;
     }
 
 
