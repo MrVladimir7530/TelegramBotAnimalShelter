@@ -15,26 +15,23 @@ public class Report {
     private String photoPath = null;
     private LocalDate creationDate;
     private String report = null;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name ="shelter_id")
     private Shelter shelter;
-    @ManyToOne
-    @JoinColumn(name = "subscriber_id")
-    private Subscriber subscriber;
-    @ManyToOne
-    @JoinColumn(name = "animal_id")
-    private Animal animal;
+    @OneToOne
+    @JoinColumn(name = "adopter_id")
+    private Adopter adopter;
 
     public Report() {
     }
 
-    public Report(String photoPath, LocalDate creationDate, String report, Shelter shelter, Subscriber subscriber, Animal animal) {
+    public Report(String photoPath, LocalDate creationDate, String report, Shelter shelter, Adopter adopter) {
         this.report = report;
         this.photoPath = photoPath;
         this.creationDate = creationDate;
         this.shelter = shelter;
-        this.subscriber = subscriber;
-        this.animal = animal;
+        this.adopter = adopter;
+
     }
 
 }

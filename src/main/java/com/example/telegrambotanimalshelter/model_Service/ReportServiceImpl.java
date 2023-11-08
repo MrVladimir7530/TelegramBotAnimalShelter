@@ -1,72 +1,74 @@
 package com.example.telegrambotanimalshelter.model_Service;
 
+import com.example.telegrambotanimalshelter.model.Adopter;
 import com.example.telegrambotanimalshelter.model.Report;
+import com.example.telegrambotanimalshelter.model.Subscriber;
 import com.example.telegrambotanimalshelter.repository.ReportRepository;
 import com.example.telegrambotanimalshelter.service.CommandHandler;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.PhotoSize;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-import java.io.*;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.time.LocalDate;
 
-import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 public class ReportServiceImpl implements ReportService, CommandHandler {
     Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
 
-    @Value("${bot.token}")
-    private String token;
 
-    @Value("${telegramApi.photoInfo.uri}")
-    private  String photoInfoUri;
-
-    @Value("${telegramApi.photoDownloadPath.uri}")
-    private  String photoDownloadPathUri;
-
-    @Value("${report.photo.path}")
-    private String reportPhotoDir;
-
+    private final UploadReportPhoto uploadReportPhoto;
     private final ReportRepository reportRepository;
+    private final AdopterService adopterService;
 
-    public ReportServiceImpl(ReportRepository reportRepository) {
+    public ReportServiceImpl(UploadReportPhoto uploadAvatar, ReportRepository reportRepository, AdopterService adopterService) {
+        this.uploadReportPhoto = uploadAvatar;
         this.reportRepository = reportRepository;
+        this.adopterService = adopterService;
     }
 
     @Override
     public SendMessage process(Update update) {
+        SendMessage message = new SendMessage();
+        message.setChatId(update.getMessage().getChatId());
+        message.setText(create(update));
 
-        Report report = new Report();
-
-
-//        if (update.getMessage().hasPhoto()) {
-//            report.setPhotoPath(uploadAvatar(update));
-//        }
-
-        return null;
+        return message;
     }
 
     /**
      * Метод для создания отчета. Если не хватает фото или текста возвращается напоминане о необходимости добавления
      * недостающей информации.
-     * @param report
+     *
+     * @param update
      * @return String
      */
     @Override
-    public String create(Report report) {
+    public String create(Update update) {
         logger.info("The create method of the ReportServiceImpl class was called");
+        Report report;
+        //Находим связь пользователя и животного(Усыновитель)
+        Adopter adopter = adopterService.findBySubscriberId(update.getMessage().getChatId());
+
+        LocalDate currentDate = LocalDate.now();
+        //Ищем отчет по Усыновителю и текущей дате
+        if (reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate)!=null){
+            report = reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate);
+
+        } else {
+            report = new Report();
+        }
+
+        if (update.getMessage().hasPhoto()) {
+            report.setPhotoPath(uploadReportPhoto.upload(update));
+        }
+        if (update.getMessage().hasText()) {
+            report.setReport(update.getMessage().getText());
+        }
+        report.setCreationDate(currentDate);
+        report.setAdopter(adopter);
+        report.setShelter(adopter.getAnimal().getShelter());
 
         reportRepository.save(report);
         if (report.getReport() == null) {
@@ -82,71 +84,5 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
     }
 
 
-    /**
-     * Метод для загрузки фотографии
-     * @param update
-     * @return
-     */
-
-    private String uploadAvatar(Update update) throws IOException {
-        logger.info("Was invoked method for upload of Report Photo ");
-
-        //получаем объект PhotoSize из массива объектов PhotoSize в Update
-        PhotoSize photoSize = update.getMessage().getPhoto().get(0);
-        String photoId = photoSize.getFileId();
-        //Get запрос к Telegram Api для получения тела ответа в виде массива строк
-        ResponseEntity<String> response = getPhotoPath(photoId);
-        //Получение uri из объекта ResponseEntity<String>
-        String photoPath = getPhotoPath(response);
-        //Получение имени и расширения файла из пути файла.
-        String photoName = getPhotoName(photoPath);
-
-        Path filePath = Path.of(reportPhotoDir, photoName);
-        Files.createDirectories(filePath.getParent());
-        Files.deleteIfExists(filePath);
-        URL downloadPhotoUri = new URL(photoDownloadPathUri);
-        try (
-                InputStream is = downloadPhotoUri.openStream();
-                OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
-                BufferedInputStream bis = new BufferedInputStream(is, 1024);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 1024)
-        ) {
-            bis.transferTo(bos);
-            return "Фото загружено";
-        } catch (IOException e) {
-            return "Загрузка не удалась((";
-        }
-
-    }
-
-    /**
-     * Метод отправки запроса Telegram Api по ID фото, для получения информации о файле
-     * в т.ч. ссылки на скачивание фото.
-     * @param photoId
-     * @return ResponseEntity<><'String'>
-     */
-    private ResponseEntity<String> getPhotoPath(String photoId) {
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        HttpEntity<HttpHeaders> request = new HttpEntity<>(headers);
-
-        return restTemplate.exchange(
-                photoInfoUri,
-                HttpMethod.GET,
-                request,
-                String.class,
-                token, photoId
-        );
-    }
-    //Получение пути файла из объекта ResponseEntity<String>, полученного с Telegram Api
-    private String getPhotoPath(ResponseEntity<String> response) {
-        JSONObject jsonObject = new JSONObject(response.getBody());
-        return String.valueOf(jsonObject
-                .getJSONObject("result")
-                .getString("file_path"));
-    }
-    //Получение имени и расширения файла из пути файла.
-    private String getPhotoName(String photoPath) {
-        return photoPath.substring(photoPath.lastIndexOf("/") + 1);
-    }
 }
+
