@@ -24,9 +24,7 @@ id bigserial primary key,
 name varchar(255),
 breed varchar(255),
 shelter_id bigint not null,
-subscriber_id bigint,
-foreign key (shelter_id) references shelter (id),
-foreign key (subscriber_id) references subscriber (chat_id)
+foreign key (shelter_id) references shelter (id)
 );
 
 --changeset IlyaAfanasev:create_table_Adopter

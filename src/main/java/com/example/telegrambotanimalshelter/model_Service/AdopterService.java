@@ -10,4 +10,7 @@ public interface AdopterService {
 
     List<Adopter> getActualAdopter();
 
+    Adopter create(Adopter adopter);
+
+    int editTrialPeriod(Long adopterId, Integer days, Boolean probationPeriodPassed);
 }
