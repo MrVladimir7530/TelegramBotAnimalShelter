@@ -23,11 +23,18 @@ create table if not exists animal(
 id bigserial primary key,
 name varchar(255),
 breed varchar(255),
-shelter_id bigint not null,
+shelter_id bigint,
 subscriber_id bigint not null,
 foreign key (shelter_id) references shelter (id),
 foreign key (subscriber_id) references subscriber (chat_id)
 );
 
+--changeset VolkovVladimir:create_table_dog_handler
+create table if not exists dog_handler(
+    id bigserial primary key,
+    name varchar(255),
+    phone_number varchar(255),
+    info text
+);
 
 
