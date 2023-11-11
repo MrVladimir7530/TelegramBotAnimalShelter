@@ -7,11 +7,16 @@ import com.example.telegrambotanimalshelter.repository.ReportRepository;
 import com.example.telegrambotanimalshelter.service.CommandHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Chat;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
 
 @Service
 public class ReportServiceImpl implements ReportService, CommandHandler {
@@ -32,7 +37,13 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
     public SendMessage process(Update update) {
         SendMessage message = new SendMessage();
         message.setChatId(update.getMessage().getChatId());
-        message.setText(create(update));
+        if (update.getMessage().hasText() && update.getMessage().getText().startsWith("Напоминание")) {
+            message.setText(update.getMessage().getText());
+            return message;
+        } else {
+
+            message.setText(create(update));
+        }
 
         return message;
     }
@@ -52,7 +63,7 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
         Adopter adopter = adopterService.findBySubscriberId(update.getMessage().getChatId());
 
         LocalDate currentDate = LocalDate.now();
-        //Ищем отчет по Усыновителю и текущей дате
+        //Ищем отчет по Усыновителю и текущей дате. Если его нет, создаем новый.
         if (reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate)!=null){
             report = reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate);
 
@@ -81,6 +92,31 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
                     ". Если появятся вопросы, с вами дополнительно свяжутся" +
                     ". Спасибо за обратную связь";
         }
+    }
+    @Scheduled(cron = "0 0 21 * * *")
+    public void checkingTheSendingOfTheDailyReport() {
+        List<Adopter> adopterList = adopterService.getActualAdopter();
+        Set<Long> adopterIdListFromTodaySReports = reportRepository.getAdopterIdFromTodaySReport(LocalDate.now());
+
+        for (Adopter adopter: adopterList) {
+            if (!adopterIdListFromTodaySReports.contains(adopter.getId())) {
+                sendReminder(adopter.getSubscriber());
+            }
+        }
+    }
+
+    private void sendReminder(Subscriber subscriber) {
+        Update update = new Update();
+        Message message = new Message();
+        Chat chat = new Chat();
+        chat.setId(subscriber.getChatId());
+        message.setChat(chat);
+        message.setText("Напоминание. Уважаемый усыновитель. Нами было замеченно" +
+                ", что вы забыли отправить ежедневный отчет о состоянии усыновленного вами животного." +
+                "Пожалуйста, не забывайте отправлять его.");
+        update.setMessage(message);
+
+        process(update);
     }
 
 

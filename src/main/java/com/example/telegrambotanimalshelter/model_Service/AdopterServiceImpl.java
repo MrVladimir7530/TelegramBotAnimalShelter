@@ -5,6 +5,8 @@ import com.example.telegrambotanimalshelter.model.Adopter;
 import com.example.telegrambotanimalshelter.repository.AdopterRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdopterServiceImpl implements AdopterService {
     private final AdopterRepository adopterRepository;
@@ -19,6 +21,11 @@ public class AdopterServiceImpl implements AdopterService {
     }
 
     public Adopter findBySubscriberId(Long id) {
-        return adopterRepository.findBySubscriberId(id);
+        return adopterRepository.findBySubscriberChatId(id);
+    }
+
+    @Override
+    public List<Adopter> getActualAdopter() {
+        return adopterRepository.getActualAdopter();
     }
 }

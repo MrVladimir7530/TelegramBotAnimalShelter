@@ -17,7 +17,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class TelegramBot extends TelegramLongPollingBot {
     private Logger log = LoggerFactory.getLogger(TelegramBot.class);
     private final ReallocationOfTeams reallocationOfTeams;
-    private final StartMenu startMenu;
     private final BotConfig botConfig;
     private static final String ERROR = "ERROR: ";
     private static final String textForCancel = "Вы вернулись в стартовое меню";

@@ -35,9 +35,15 @@ public class StartMenu implements CommandHandler{
     @Override
     public SendMessage process(Update update) {
         log.info("The process method of the StartMenu class was called");
-        createUser(update);
         SendMessage message = new SendMessage();
-        message.setChatId(update.getMessage().getChatId());
+        if (update.hasCallbackQuery()) {
+            message.setChatId(update.getCallbackQuery().getMessage().getChatId());
+
+        } else {
+            createUser(update);
+            message.setChatId(update.getMessage().getChatId());
+
+        }
         message.setReplyMarkup(createInlineKeyboard());
         message.setText(createText());
         return message;
