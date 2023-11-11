@@ -44,6 +44,10 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("INFO_GET_CAT", shelterInformationCatService);
         commandHandlerMap.put("INFO_NEED_DOCUMENTATION_FOR_CAT", shelterInformationCatService);
         commandHandlerMap.put("HELP_WITH_TRANSPORTATION_CAT", shelterInformationCatService);
+        commandHandlerMap.put("KITTY_CARE", shelterInformationCatService);
+        commandHandlerMap.put("ADULT_CAT_CARE", shelterInformationCatService);
+        commandHandlerMap.put("CAT_WITH_LIMITATIONS_CARE", shelterInformationCatService);
+        commandHandlerMap.put("REASONS_FOR_REFUSAL_FROM_CAT", shelterInformationCatService);
 
         commandHandlerMap.put("HOW_TO_TAKE_DOG", shelterInformationDogService);
         commandHandlerMap.put("INFO_GET_DOG", shelterInformationDogService);
@@ -51,6 +55,11 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("HELP_WITH_TRANSPORTATION_DOG", shelterInformationDogService);
         commandHandlerMap.put("DOG_HANDLER_ADVICE_BY_TAKE", shelterInformationDogService);
         commandHandlerMap.put("DOG_HANDLER_ADVICE_BY_CARE", shelterInformationDogService);
+        commandHandlerMap.put("PUPPY_CARE", shelterInformationDogService);
+        commandHandlerMap.put("ADULT_DOG_CARE", shelterInformationDogService);
+        commandHandlerMap.put("DOG_WITH_LIMITATIONS_CARE", shelterInformationDogService);
+        commandHandlerMap.put("REASONS_FOR_REFUSAL_FROM_DOG", shelterInformationDogService);
+        commandHandlerMap.put("DOG_HANDLER_RECOMMENDATIONS", shelterInformationDogService);
 
         commandHandlerMap.put("CAT_INFO", generalInfoCatShelterService);
         commandHandlerMap.put("GENERAL_INFO_ABOUT_CAT_SHELTER", generalInfoCatShelterService);
@@ -89,7 +98,8 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
 
             CommandHandler commandHandler = commandHandlerMap.get(update.getMessage().getText());
             message = commandHandler.process(update);
-        } else {
+        }
+        else {
 
             message.setChatId(update.getMessage().getChatId());
             message.setText("Команда не распознана");
