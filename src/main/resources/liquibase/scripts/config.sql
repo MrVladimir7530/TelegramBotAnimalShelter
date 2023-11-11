@@ -31,3 +31,5 @@ foreign key (subscriber_id) references subscriber (chat_id)
 
 
 
+
+

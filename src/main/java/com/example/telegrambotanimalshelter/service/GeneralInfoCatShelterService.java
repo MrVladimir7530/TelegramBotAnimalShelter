@@ -1,9 +1,10 @@
 package com.example.telegrambotanimalshelter.service;
 
-import com.example.telegrambotanimalshelter.model.Animal;
 import com.example.telegrambotanimalshelter.model.Shelter;
+import com.example.telegrambotanimalshelter.repository.ShelterRepository;
+import liquibase.pro.packaged.S;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -18,11 +19,20 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class GeneralShelterInfoMenu implements CommandHandler {
+public class GeneralInfoCatShelterService implements CommandHandler {
+    private final String CAT_INFO = "CAT_INFO";
+    private final String GENERAL_INFO_ABOUT_CAT_SHELTER = "GENERAL_INFO_ABOUT_CAT_SHELTER";
+    private final String ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER = "ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER";
+    private final String SECURITY_INFO_OF_CAT_SHELTER = "SECURITY_INFO_OF_CAT_SHELTER";
+    private final String CAT_SAFETY_RECOMMENDATIONS = "CAT_SAFETY_RECOMMENDATIONS";
+    private final String EXCEPTION = "Команда не распознана";
+
+    @Autowired
+    private ShelterRepository shelterRepository;
 
     /**
      * Метод для обработки входящего сообщения от пользователя и возврата сообщения для отправки
-     * Меню общей информации о приютах
+     * Меню общей информации о приюте кошек
      *
      * @param update
      * @return SendMessage
@@ -34,7 +44,8 @@ public class GeneralShelterInfoMenu implements CommandHandler {
         SendMessage message = new SendMessage();
         message.setChatId(update.getCallbackQuery().getFrom().getId());
         message.setReplyMarkup(createKeyboardMarkup(update));
-        message.setText(createText());
+        String answer = chooseWay(update);
+        message.setText(answer);
 
         return message;
     }
@@ -48,24 +59,18 @@ public class GeneralShelterInfoMenu implements CommandHandler {
     private InlineKeyboardMarkup createKeyboardMarkup(Update update) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
-        InlineKeyboardButton generalInfoAboutShelter = new InlineKeyboardButton("Рассказать о приюте");
+        InlineKeyboardButton generalInfoAboutShelter = new InlineKeyboardButton("Рассказать о приюте кошек");
         InlineKeyboardButton addressAndScheduleOfShelter = new InlineKeyboardButton("Расписание работы, адрес и схема проезда");
         InlineKeyboardButton contactInfoOfShelterSecurity = new InlineKeyboardButton("Контакты охраны для оформления пропуска на авто");
         InlineKeyboardButton generalSafetyRecommendations = new InlineKeyboardButton("Техника безопасности на территории приюта");
         InlineKeyboardButton getAndSaveContactInfoAboutUser = new InlineKeyboardButton("Оставить контакты для обратной связи");
         InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
 
-        if (update.getCallbackQuery().getData().equals("CAT_INFO")) {
-            generalInfoAboutShelter.setCallbackData("GENERAL_INFO_ABOUT_CAT_SHELTER");
-            addressAndScheduleOfShelter.setCallbackData("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER");
-            contactInfoOfShelterSecurity.setCallbackData("SECURITY_INFO_OF_CAT_SHELTER");
-            generalSafetyRecommendations.setCallbackData("CAT_SAFETY_RECOMMENDATIONS");
-        } else {
-            generalInfoAboutShelter.setCallbackData("GENERAL_INFO_ABOUT_DOG_SHELTER");
-            addressAndScheduleOfShelter.setCallbackData("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER");
-            contactInfoOfShelterSecurity.setCallbackData("SECURITY_INFO_OF_DOG_SHELTER");
-            generalSafetyRecommendations.setCallbackData("DOG_SAFETY_RECOMMENDATIONS");
-        }
+        generalInfoAboutShelter.setCallbackData(GENERAL_INFO_ABOUT_CAT_SHELTER);
+        addressAndScheduleOfShelter.setCallbackData(ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER);
+        contactInfoOfShelterSecurity.setCallbackData(SECURITY_INFO_OF_CAT_SHELTER);
+        generalSafetyRecommendations.setCallbackData(CAT_SAFETY_RECOMMENDATIONS);
+
         getAndSaveContactInfoAboutUser.setCallbackData("USER_CONTACTS");
         callVolunteer.setCallbackData("Call_Volunteer");
 
@@ -102,7 +107,27 @@ public class GeneralShelterInfoMenu implements CommandHandler {
 
     private String createText() {
         String text;
-        text = "Вы находитесь с разделе общей информации о приюте. Пожалуйста, выберите, о чем вы бы хотели узнать подробнее";
+        text = "Вы находитесь с разделе общей информации о приюте кошек. Пожалуйста, выберите, о чем вы бы хотели узнать подробнее";
         return text;
+    }
+
+    private String chooseWay(Update update) {
+        String animalType = "Приют кошек";
+        Shelter shelter = shelterRepository.findByName(animalType);
+        String answer = update.getCallbackQuery().getData();
+        switch (answer) {
+            case CAT_INFO:
+                return createText();
+            case GENERAL_INFO_ABOUT_CAT_SHELTER:
+                return shelter.getGeneralInfo();
+            case ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER:
+                return shelter.getInfo();
+            case SECURITY_INFO_OF_CAT_SHELTER:
+                return shelter.getSecurityContact();
+            case CAT_SAFETY_RECOMMENDATIONS:
+                return shelter.getSafetyPrecautions();
+            default:
+                return EXCEPTION;
+        }
     }
 }
