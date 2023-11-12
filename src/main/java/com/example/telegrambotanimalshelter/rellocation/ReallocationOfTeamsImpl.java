@@ -26,6 +26,8 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private Logger log = LoggerFactory.getLogger(ReallocationOfTeamsImpl.class);
     private final StartMenu startMenu;
     private final AnimalMenu animalMenu;
+    private final GeneralInfoCatShelterService generalInfoCatShelterService;
+    private final GeneralInfoDogShelterService generalInfoDogShelterService;
     private final ShelterInformationDogService shelterInformationDogService;
     private final ShelterInformationCatService shelterInformationCatService;
     private final ReportButtonAnswerService reportButtonAnswerService;
@@ -49,6 +51,19 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("HELP_WITH_TRANSPORTATION_DOG", shelterInformationDogService);
         commandHandlerMap.put("DOG_HANDLER_ADVICE_BY_TAKE", shelterInformationDogService);
         commandHandlerMap.put("DOG_HANDLER_ADVICE_BY_CARE", shelterInformationDogService);
+
+        commandHandlerMap.put("CAT_INFO", generalInfoCatShelterService);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_CAT_SHELTER", generalInfoCatShelterService);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER", generalInfoCatShelterService);
+        commandHandlerMap.put("SECURITY_INFO_OF_CAT_SHELTER", generalInfoCatShelterService);
+        commandHandlerMap.put("CAT_SAFETY_RECOMMENDATIONS", generalInfoCatShelterService);
+
+        commandHandlerMap.put("DOG_INFO", generalInfoDogShelterService);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_DOG_SHELTER", generalInfoDogShelterService);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER", generalInfoDogShelterService);
+        commandHandlerMap.put("SECURITY_INFO_OF_DOG_SHELTER", generalInfoDogShelterService);
+        commandHandlerMap.put("DOG_SAFETY_RECOMMENDATIONS", generalInfoDogShelterService);
+
     }
 
     /**

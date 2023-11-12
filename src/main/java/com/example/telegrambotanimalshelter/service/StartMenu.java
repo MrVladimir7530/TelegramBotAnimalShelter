@@ -1,6 +1,7 @@
 package com.example.telegrambotanimalshelter.service;
 
 
+import com.example.telegrambotanimalshelter.model.Shelter;
 import com.example.telegrambotanimalshelter.model.Subscriber;
 import com.example.telegrambotanimalshelter.model_Service.SubscriberService;
 
