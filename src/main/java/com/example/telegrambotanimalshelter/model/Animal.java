@@ -15,7 +15,5 @@ public class Animal {
     @ManyToOne
     @JoinColumn(name ="shelter_id")
     private Shelter shelter;
-    @ManyToOne
-    @JoinColumn(name = "subscriber_id")
-    private Subscriber subscriber;
+
 }

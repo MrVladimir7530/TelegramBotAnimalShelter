@@ -24,9 +24,32 @@ id bigserial primary key,
 name varchar(255),
 breed varchar(255),
 shelter_id bigint,
+shelter_id bigint not null,
+foreign key (shelter_id) references shelter (id)
+);
+
+--changeset IlyaAfanasev:create_table_Adopter
+create table if not exists adopter(
+id bigserial primary key,
+adoption_date date not null,
+trial_period integer,
 subscriber_id bigint not null,
+animal_id bigint not null,
+foreign key (subscriber_id) references subscriber (chat_id),
+foreign key (animal_id) references animal (id)
+);
+
+
+--changeset IlyaAfanasev:create_table_Report
+create table if not exists report(
+id bigserial primary key,
+photo_path text,
+creation_date date not null ,
+report text,
+shelter_id bigint not null,
+adopter_id bigint not null,
 foreign key (shelter_id) references shelter (id),
-foreign key (subscriber_id) references subscriber (chat_id)
+foreign key (adopter_id) references adopter (id)
 );
 
 --changeset VolkovVladimir:create_table_dog_handler
@@ -36,5 +59,7 @@ create table if not exists dog_handler(
     phone_number varchar(255),
     info text
 );
+
+
 
 

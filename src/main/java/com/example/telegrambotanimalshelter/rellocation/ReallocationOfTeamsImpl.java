@@ -26,9 +26,11 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private Logger log = LoggerFactory.getLogger(ReallocationOfTeamsImpl.class);
     private final StartMenu startMenu;
     private final AnimalMenu animalMenu;
+    private final GeneralInfoCatShelterService generalInfoCatShelterService;
+    private final GeneralInfoDogShelterService generalInfoDogShelterService;
     private final ShelterInformationDogService shelterInformationDogService;
     private final ShelterInformationCatService shelterInformationCatService;
-
+    private final ReportButtonAnswerService reportButtonAnswerService;
 
     @PostConstruct
     public void init() {
@@ -36,6 +38,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("/cancel", startMenu);
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
+        commandHandlerMap.put("REPORT", reportButtonAnswerService);
 
         commandHandlerMap.put("HOW_TO_TAKE_CAT", shelterInformationCatService);
         commandHandlerMap.put("INFO_GET_CAT", shelterInformationCatService);
@@ -57,6 +60,20 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("DOG_WITH_LIMITATIONS_CARE", shelterInformationDogService);
         commandHandlerMap.put("REASONS_FOR_REFUSAL_FROM_DOG", shelterInformationDogService);
         commandHandlerMap.put("DOG_HANDLER_RECOMMENDATIONS", shelterInformationDogService);
+
+        commandHandlerMap.put("CAT_INFO", generalInfoCatShelterService);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_CAT_SHELTER", generalInfoCatShelterService);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_CAT_SHELTER", generalInfoCatShelterService);
+        commandHandlerMap.put("SECURITY_INFO_OF_CAT_SHELTER", generalInfoCatShelterService);
+        commandHandlerMap.put("CAT_SAFETY_RECOMMENDATIONS", generalInfoCatShelterService);
+
+        commandHandlerMap.put("DOG_INFO", generalInfoDogShelterService);
+        commandHandlerMap.put("GENERAL_INFO_ABOUT_DOG_SHELTER", generalInfoDogShelterService);
+        commandHandlerMap.put("ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER", generalInfoDogShelterService);
+        commandHandlerMap.put("SECURITY_INFO_OF_DOG_SHELTER", generalInfoDogShelterService);
+        commandHandlerMap.put("DOG_SAFETY_RECOMMENDATIONS", generalInfoDogShelterService);
+
+
     }
 
     /**
