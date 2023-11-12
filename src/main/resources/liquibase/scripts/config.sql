@@ -23,6 +23,7 @@ create table if not exists animal(
 id bigserial primary key,
 name varchar(255),
 breed varchar(255),
+shelter_id bigint,
 shelter_id bigint not null,
 foreign key (shelter_id) references shelter (id)
 );

@@ -73,6 +73,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("SECURITY_INFO_OF_DOG_SHELTER", generalInfoDogShelterService);
         commandHandlerMap.put("DOG_SAFETY_RECOMMENDATIONS", generalInfoDogShelterService);
 
+
     }
 
     /**
