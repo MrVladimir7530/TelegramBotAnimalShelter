@@ -1,5 +1,6 @@
 package com.example.telegrambotanimalshelter.rellocation;
 
+import com.example.telegrambotanimalshelter.model_Service.PhoneNumberFromMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,8 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private final ShelterInformationDogService shelterInformationDogService;
     private final ShelterInformationCatService shelterInformationCatService;
     private final ReportButtonAnswerService reportButtonAnswerService;
+    private final PhoneNumberFromMessage phoneNumberFromMessage;
+    private final PhoneMenu phoneMenu;
 
     @PostConstruct
     public void init() {
@@ -39,6 +42,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
         commandHandlerMap.put("REPORT", reportButtonAnswerService);
+        commandHandlerMap.put("LEAVE_CONTACTS", phoneMenu);
 
         commandHandlerMap.put("HOW_TO_TAKE_CAT", shelterInformationCatService);
         commandHandlerMap.put("INFO_GET_CAT", shelterInformationCatService);
@@ -99,18 +103,19 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
 
             CommandHandler commandHandler = commandHandlerMap.get(update.getMessage().getText());
             message = commandHandler.process(update);
-        }
-        else {
+        } else if (phoneNumberFromMessage.parsingPhone(update)) {
+            phoneNumberFromMessage.savePhone(update);
+            message = phoneMenu.process(update);
+        } else {
 
             message.setChatId(update.getMessage().getChatId());
             message.setText("Команда не распознана");
         }
 
-
-
-
         return message;
     }
+
+
 
 
 
