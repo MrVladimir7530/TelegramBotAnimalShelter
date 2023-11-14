@@ -1,8 +1,8 @@
 package service;
 
-import com.example.telegrambotanimalshelter.model.Subscriber;
-import com.example.telegrambotanimalshelter.model_Service.SubscriberServiceImpl;
-import com.example.telegrambotanimalshelter.service.StartMenu;
+import com.example.telegrambotanimalshelter.models.Subscriber;
+import com.example.telegrambotanimalshelter.model_services.SubscriberServiceImpl;
+import com.example.telegrambotanimalshelter.services.StartMenu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

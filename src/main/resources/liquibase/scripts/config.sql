@@ -59,6 +59,14 @@ create table if not exists dog_handler(
     info text
 );
 
+--changeset VolkovVladimir:create_table_volunteer
+create table if not exists volunteer(
+    chat_id bigint primary key,
+    name varchar(255),
+    phone_number varchar(255),
+    user_name varchar(255)
+);
+
 
 
 
