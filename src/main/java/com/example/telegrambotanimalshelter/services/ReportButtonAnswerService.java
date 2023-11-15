@@ -1,46 +1,39 @@
-package service;
+package com.example.telegrambotanimalshelter.services;
 
-import com.example.telegrambotanimalshelter.services.ReportButtonAnswerService;
-import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+@Service
+public class ReportButtonAnswerService implements CommandHandler {
+    Logger log = LoggerFactory.getLogger(ReportButtonAnswerService.class);
 
-public class ReportButtonAnswerServiceTest {
-    private final ReportButtonAnswerService out = new ReportButtonAnswerService();
-    @Test
-    public void shouldCorrectResultFromMethodProcessWhenCallbackDataIsCAT() {
-        Update update = new Update();
+    /**
+     * Метод для обработки входящего обновления и возврата сообщения
+     * @param update
+     * @return SendMessage
+     */
+    @Override
+    public SendMessage process(Update update) {
+        log.info("The process method of the ReportButtonAnswerService class was called"+"CallBackData = "
+                +update.getCallbackQuery().getData());
+        SendMessage message = new SendMessage();
+        message.setChatId(update.getCallbackQuery().getFrom().getId());
+        message.setReplyMarkup(createKeyboardMarkup(update));
+        message.setText(createText());
 
-        //создаем CallbackData для интеграции в  update
-        CallbackQuery callbackQuery = new CallbackQuery();
+        return message;
+    }
 
-        //создаем пользователя для интеграции в CallbackQuery
-        User user = new User(1L, "John", false);
-        user.setUserName("John Smith");
-
-        callbackQuery.setFrom(user);
-        callbackQuery.setData("REPORT");
-
-        update.setCallbackQuery(callbackQuery);
-
-
-        SendMessage actualMessage= out.process(update);
-        String textExpected = "Меню ежедневного отчета";
-
-        InlineKeyboardMarkup expectedInlineKeyboardMarkup = createKeyboardMarkup(update);
-        InlineKeyboardMarkup actualInlineKeyboardMarkup = (InlineKeyboardMarkup)actualMessage.getReplyMarkup();
-
-        assertEquals(textExpected, actualMessage.getText());
-        assertEquals(expectedInlineKeyboardMarkup, actualInlineKeyboardMarkup);
+    private String createText() {
+        return "Меню ежедневного отчета";
     }
 
     private InlineKeyboardMarkup createKeyboardMarkup(Update update) {
@@ -72,4 +65,6 @@ public class ReportButtonAnswerServiceTest {
 
 
     }
+
+
 }

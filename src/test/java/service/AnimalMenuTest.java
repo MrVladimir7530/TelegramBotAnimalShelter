@@ -1,6 +1,6 @@
 package service;
 
-import com.example.telegrambotanimalshelter.service.AnimalMenu;
+import com.example.telegrambotanimalshelter.services.AnimalMenu;
 import org.junit.jupiter.api.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.*;

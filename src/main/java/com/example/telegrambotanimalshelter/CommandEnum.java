@@ -1,10 +1,6 @@
 package com.example.telegrambotanimalshelter;
 
-import com.example.telegrambotanimalshelter.service.AnimalMenu;
-import com.example.telegrambotanimalshelter.service.CommandHandler;
-import com.example.telegrambotanimalshelter.service.StartMenu;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
+import com.example.telegrambotanimalshelter.services.CommandHandler;
 
 
 public enum CommandEnum {

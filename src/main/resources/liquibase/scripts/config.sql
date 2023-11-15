@@ -51,6 +51,21 @@ foreign key (shelter_id) references shelter (id),
 foreign key (adopter_id) references adopter (id)
 );
 
+--changeset VolkovVladimir:create_table_dog_handler
+create table if not exists dog_handler(
+    id bigserial primary key,
+    name varchar(255),
+    phone_number varchar(255),
+    info text
+);
+
+--changeset VolkovVladimir:create_table_volunteer
+create table if not exists volunteer(
+    chat_id bigint primary key,
+    name varchar(255),
+    phone_number varchar(255),
+    user_name varchar(255)
+);
 
 
 
