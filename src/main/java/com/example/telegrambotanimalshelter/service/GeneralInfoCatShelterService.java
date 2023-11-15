@@ -2,8 +2,8 @@ package com.example.telegrambotanimalshelter.service;
 
 import com.example.telegrambotanimalshelter.model.Shelter;
 import com.example.telegrambotanimalshelter.repository.ShelterRepository;
-import liquibase.pro.packaged.S;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -18,7 +18,6 @@ import java.util.List;
  * Сервис для обработки команд общей информации о приютах
  */
 @Service
-@Slf4j
 public class GeneralInfoCatShelterService implements CommandHandler {
     private final String CAT_INFO = "CAT_INFO";
     private final String GENERAL_INFO_ABOUT_CAT_SHELTER = "GENERAL_INFO_ABOUT_CAT_SHELTER";
@@ -27,6 +26,7 @@ public class GeneralInfoCatShelterService implements CommandHandler {
     private final String CAT_SAFETY_RECOMMENDATIONS = "CAT_SAFETY_RECOMMENDATIONS";
     private final String EXCEPTION = "Команда не распознана";
 
+    Logger log = LoggerFactory.getLogger(GeneralInfoCatShelterService.class);
     @Autowired
     private ShelterRepository shelterRepository;
 
