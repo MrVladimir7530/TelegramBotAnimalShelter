@@ -1,7 +1,7 @@
 package com.example.telegrambotanimalshelter.controllers;
 
-import com.example.telegrambotanimalshelter.model.Shelter;
-import com.example.telegrambotanimalshelter.model_Service.ShelterService;
+import com.example.telegrambotanimalshelter.models.Shelter;
+import com.example.telegrambotanimalshelter.model_services.ShelterService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;

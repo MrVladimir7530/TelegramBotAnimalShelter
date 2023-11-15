@@ -1,7 +1,11 @@
 package com.example.telegrambotanimalshelter.model_services;
 
+import com.example.telegrambotanimalshelter.models.Shelter;
+import com.example.telegrambotanimalshelter.repositories.ShelterRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 @Service
 @Slf4j
