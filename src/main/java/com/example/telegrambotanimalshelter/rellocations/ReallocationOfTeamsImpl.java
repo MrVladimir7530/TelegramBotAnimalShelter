@@ -44,6 +44,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
         commandHandlerMap.put("REPORT", reportButtonAnswerService);
+        commandHandlerMap.put("Daily_Report_Form", reportButtonAnswerService);
         commandHandlerMap.put("LEAVE_CONTACTS", phoneMenu);
         commandHandlerMap.put("YES_VOLUNTEER", startMenu);
         commandHandlerMap.put("NO_VOLUNTEER", startMenu);
@@ -105,6 +106,8 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
             }
 
         } else if (update.hasMessage() && update.getMessage().hasPhoto()) {
+            message = reportService.process(update);
+        } else if (update.hasMessage() && update.getMessage().hasDocument()) {
             message = reportService.process(update);
         } else if (update.hasMessage() && commandHandlerMap.containsKey(update.getMessage().getText())) {
             CommandHandler commandHandler = commandHandlerMap.get(update.getMessage().getText());

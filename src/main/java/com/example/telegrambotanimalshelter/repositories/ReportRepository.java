@@ -12,6 +12,6 @@ import java.util.Set;
 public interface ReportRepository extends JpaRepository<Report, Long> {
     Report findByAdopterIdAndCreationDate(Long id, LocalDate creationDate);
 
-    @Query(value = "SELECT id FROM report where r.creation_date = ?1", nativeQuery = true)
+    @Query(value = "SELECT id FROM report where creation_date = ?1", nativeQuery = true)
     Set<Long> getAdopterIdFromTodaySReport(LocalDate localDate);
 }
