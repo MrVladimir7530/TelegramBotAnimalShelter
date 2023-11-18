@@ -1,49 +1,50 @@
 package com.example.telegrambotanimalshelter.model_services;
 
+
 import com.example.telegrambotanimalshelter.models.Adopter;
 import com.example.telegrambotanimalshelter.models.Report;
 import com.example.telegrambotanimalshelter.models.Subscriber;
 import com.example.telegrambotanimalshelter.repositories.ReportRepository;
 import com.example.telegrambotanimalshelter.services.CommandHandler;
+import com.example.telegrambotanimalshelter.services.TelegramBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Chat;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class ReportServiceImpl implements ReportService, CommandHandler {
     Logger logger = LoggerFactory.getLogger(ReportServiceImpl.class);
-
-
     private final UploadReportPhoto uploadReportPhoto;
     private final ReportRepository reportRepository;
     private final AdopterService adopterService;
+    private final TelegramBot telegramBot;
 
-    public ReportServiceImpl(UploadReportPhoto uploadAvatar, ReportRepository reportRepository, AdopterService adopterService) {
+    public ReportServiceImpl(@Lazy TelegramBot telegramBot, UploadReportPhoto uploadAvatar
+            , ReportRepository reportRepository, AdopterService adopterService) {
+        this.telegramBot = telegramBot;
         this.uploadReportPhoto = uploadAvatar;
         this.reportRepository = reportRepository;
         this.adopterService = adopterService;
     }
 
+
     @Override
     public SendMessage process(Update update) {
+        logger.info("The process method of the ReportServiceImpl class was called");
         SendMessage message = new SendMessage();
         message.setChatId(update.getMessage().getChatId());
-        if (update.getMessage().hasText() && update.getMessage().getText().startsWith("Напоминание")) {
-            message.setText(update.getMessage().getText());
-            return message;
-        } else {
+        message.setText(create(update));
 
-            message.setText(create(update));
-        }
 
         return message;
     }
@@ -73,8 +74,10 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
 
         if (update.getMessage().hasPhoto()) {
             report.setPhotoPath(uploadReportPhoto.upload(update));
-        }
-        if (update.getMessage().hasText()) {
+            if (update.getMessage().hasText()){
+            report.setReport(update.getMessage().getText());
+            }
+        }else {
             report.setReport(update.getMessage().getText());
         }
         report.setCreationDate(currentDate);
@@ -93,31 +96,34 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
                     ". Спасибо за обратную связь";
         }
     }
-    @Scheduled(cron = "0 0 21 * * *")
+    @Scheduled(cron = "0 41 23 * * *")
     public void checkingTheSendingOfTheDailyReport() {
+        //получаем связи усыновления, для которых еще не прошел испытательный срок
         List<Adopter> adopterList = adopterService.getActualAdopter();
+        //список усыновлений, для которых не прислали отчет
+        List<Adopter> adopterList2 = new ArrayList<>();
         Set<Long> adopterIdListFromTodaySReports = reportRepository.getAdopterIdFromTodaySReport(LocalDate.now());
 
         for (Adopter adopter: adopterList) {
             if (!adopterIdListFromTodaySReports.contains(adopter.getId())) {
+                adopterList2.add(adopter);
                 sendReminder(adopter.getSubscriber());
             }
         }
     }
 
     private void sendReminder(Subscriber subscriber) {
-        Update update = new Update();
-        Message message = new Message();
-        Chat chat = new Chat();
-        chat.setId(subscriber.getChatId());
-        message.setChat(chat);
-        message.setText("Напоминание. Уважаемый усыновитель. Нами было замеченно" +
-                ", что вы забыли отправить ежедневный отчет о состоянии усыновленного вами животного." +
-                "Пожалуйста, не забывайте отправлять его.");
-        update.setMessage(message);
 
-        process(update);
+
+        String text = "Напоминание. Уважаемый усыновитель. Нами было замеченно" +
+                ", что вы забыли отправить ежедневный отчет о состоянии усыновленного вами животного." +
+                "Пожалуйста, не забывайте отправлять его.";
+        SendMessage message = new SendMessage();
+        message.setText(text);
+        telegramBot.prepareAndSendMessage(message);
     }
+
+
 
 
 }

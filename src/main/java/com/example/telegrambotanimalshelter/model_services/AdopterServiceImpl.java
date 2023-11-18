@@ -7,6 +7,7 @@ import com.example.telegrambotanimalshelter.services.TelegramBot;
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -20,7 +21,7 @@ public class AdopterServiceImpl implements AdopterService {
     private final TelegramBot telegramBot;
     private final AdopterRepository adopterRepository;
 
-    public AdopterServiceImpl(TelegramBot telegramBot, AdopterRepository adopterRepository) {
+    public AdopterServiceImpl(@Lazy TelegramBot telegramBot, AdopterRepository adopterRepository) {
         this.telegramBot = telegramBot;
         this.adopterRepository = adopterRepository;
     }
@@ -64,26 +65,28 @@ public class AdopterServiceImpl implements AdopterService {
                 sendDefaultSadMessage(adopter);
             }
 
-        }else {
+        } else {
             sendEditTrialPeriodMessage(adopter, days);
         }
         return 1;
     }
+
     private void sendDefaultHappyMessage(Adopter adopter) {
         SendMessage message = new SendMessage();
         message.setChatId(adopter.getSubscriber().getChatId());
         message.setText("Поздравляем. Вы прошли испытательный срок и обрели нового друга и члена семьи" +
-                ". А " +adopter.getAnimal().getName()+ " обрел(а) новый дом.");
+                ". А " + adopter.getAnimal().getName() + " обрел(а) новый дом.");
         prepareAndSendMessage(message);
     }
 
     private void sendEditTrialPeriodMessage(Adopter adopter, Integer days) {
         SendMessage message = new SendMessage();
         message.setChatId(adopter.getSubscriber().getChatId());
-        message.setText("Уважаемый "+adopter.getSubscriber().getUserName()+
-                " мы вынужены добавить вам испытательный срок на " +days+ " дней.");
+        message.setText("Уважаемый " + adopter.getSubscriber().getUserName() +
+                " мы вынужены добавить вам испытательный срок на " + days + " дней.");
         prepareAndSendMessage(message);
     }
+
     private void sendDefaultSadMessage(Adopter adopter) {
         SendMessage message = new SendMessage();
         message.setChatId(adopter.getSubscriber().getChatId());
@@ -91,6 +94,7 @@ public class AdopterServiceImpl implements AdopterService {
                 ". Вам нужно выполнить следующие шаги: Какие-то шаги...");
         prepareAndSendMessage(message);
     }
+
     public void prepareAndSendMessage(SendMessage message) {
 
         try {
