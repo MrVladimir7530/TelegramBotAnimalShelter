@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +74,16 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
         }
 
         if (update.getMessage().hasPhoto()) {
-            report.setPhotoPath(uploadReportPhoto.upload(update));
-            if (update.getMessage().hasText()){
-            report.setReport(update.getMessage().getText());
+            try {
+                report.setPhotoPath(uploadReportPhoto.upload(update));
+            } catch (IOException e) {
+                logger.error("Ошибка загрузки фото. "+e.getClass());
+
+                return "Загрузка фото не удалась. Мы починим это в ближайшее время.";
             }
+
+            report.setReport(update.getMessage().getCaption());
+
         }else {
             report.setReport(update.getMessage().getText());
         }
@@ -96,7 +103,7 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
                     ". Спасибо за обратную связь";
         }
     }
-    @Scheduled(cron = "0 41 23 * * *")
+    @Scheduled(cron = "0 0 21 * * *")
     public void checkingTheSendingOfTheDailyReport() {
         //получаем связи усыновления, для которых еще не прошел испытательный срок
         List<Adopter> adopterList = adopterService.getActualAdopter();
@@ -120,7 +127,9 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
                 "Пожалуйста, не забывайте отправлять его.";
         SendMessage message = new SendMessage();
         message.setText(text);
+        message.setChatId(subscriber.getChatId());
         telegramBot.prepareAndSendMessage(message);
+
     }
 
 
