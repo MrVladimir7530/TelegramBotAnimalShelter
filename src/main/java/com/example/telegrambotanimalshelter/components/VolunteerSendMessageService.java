@@ -17,6 +17,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Сервис отвечающий за отправку сообщий в тг волонтеру
+ */
 @Service
 public class VolunteerSendMessageService {
     private Logger log = LoggerFactory.getLogger(VolunteerSendMessageService.class);

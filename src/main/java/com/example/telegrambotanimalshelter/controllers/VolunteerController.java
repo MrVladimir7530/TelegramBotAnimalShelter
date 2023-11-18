@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Контроллер позволяющий добавлять, удалять и получать волонтеров из БД
+ */
 @RestController
 @RequestMapping("volunteer")
 @RequiredArgsConstructor
@@ -17,7 +20,7 @@ public class VolunteerController {
         Volunteer volunteer;
         try {
             volunteer = volunteerService.getVolunteer(chatId);
-        } catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(volunteer);

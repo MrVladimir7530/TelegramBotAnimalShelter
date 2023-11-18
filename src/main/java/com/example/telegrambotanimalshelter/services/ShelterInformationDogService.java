@@ -3,6 +3,8 @@ package com.example.telegrambotanimalshelter.services;
 import com.example.telegrambotanimalshelter.models.DogHandler;
 import com.example.telegrambotanimalshelter.repositories.DogHandlerRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import java.util.List;
 @PropertySource(value = "getInfoAboutDog.text", encoding = "UTF-8")
 @RequiredArgsConstructor
 public class ShelterInformationDogService implements CommandHandler {
-
+    Logger log = LoggerFactory.getLogger(ShelterInformationDogService.class);
     private final DogHandlerRepository dogHandlerRepository;
     private String EXCEPTION = "Ошибка команды, пожалуйста повторите действие";
     private final String HOW_TO_TAKE_DOG = "HOW_TO_TAKE_DOG";
@@ -59,6 +61,7 @@ public class ShelterInformationDogService implements CommandHandler {
 
     @Override
     public SendMessage process(Update update) {
+        log.info("got into ShelterInformationDogService");
         SendMessage message = new SendMessage();
         message.setChatId(update.getCallbackQuery().getFrom().getId());
         message.setReplyMarkup(createInlineKeyboard());
@@ -135,6 +138,7 @@ public class ShelterInformationDogService implements CommandHandler {
     }
 
     public String choiceWay(Update update) {
+        log.info("Choosing way into ShelterInformationDogService");
         String text = update.getCallbackQuery().getData();
         switch (text) {
             case HOW_TO_TAKE_DOG:
@@ -164,18 +168,19 @@ public class ShelterInformationDogService implements CommandHandler {
         }
     }
 
-   private String getContactDogHandlers() {
-       List<DogHandler> dogHandlers = dogHandlerRepository.findAll();
-       StringBuilder answerDogHandler = new StringBuilder();
-       for (DogHandler dogHandler : dogHandlers) {
-           answerDogHandler.append("Кинолог: ")
-                   .append(dogHandler.getName())
-                   .append(", номер: ")
-                   .append(dogHandler.getPhoneNumber())
-                   .append(", информация о нем: ")
-                   .append(dogHandler.getInfo())
-                   .append("\n");
-       }
-       return String.valueOf(answerDogHandler);
-   }
+    private String getContactDogHandlers() {
+        log.info("receiving dog handler's contacts");
+        List<DogHandler> dogHandlers = dogHandlerRepository.findAll();
+        StringBuilder answerDogHandler = new StringBuilder();
+        for (DogHandler dogHandler : dogHandlers) {
+            answerDogHandler.append("Кинолог: ")
+                    .append(dogHandler.getName())
+                    .append(", номер: ")
+                    .append(dogHandler.getPhoneNumber())
+                    .append(", информация о нем: ")
+                    .append(dogHandler.getInfo())
+                    .append("\n");
+        }
+        return String.valueOf(answerDogHandler);
+    }
 }
