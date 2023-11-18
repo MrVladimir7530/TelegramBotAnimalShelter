@@ -1,5 +1,6 @@
 package service;
 
+import com.example.telegrambotanimalshelter.components.VolunteerSendMessageService;
 import com.example.telegrambotanimalshelter.models.Subscriber;
 import com.example.telegrambotanimalshelter.model_services.SubscriberServiceImpl;
 import com.example.telegrambotanimalshelter.services.StartMenu;
@@ -22,11 +23,13 @@ import static org.mockito.Mockito.*;
 
 public class StartMenuTest {
     private SubscriberServiceImpl subscriberServiceMock;
+    private VolunteerSendMessageService volunteerSendMessageService;
     private StartMenu out;
     @BeforeEach
     public void init() {
         subscriberServiceMock = mock(SubscriberServiceImpl.class);
-        out = new StartMenu(subscriberServiceMock);
+        volunteerSendMessageService = mock(VolunteerSendMessageService.class);
+        out = new StartMenu(subscriberServiceMock, volunteerSendMessageService);
     }
 
 

@@ -101,7 +101,6 @@ public class StartMenu implements CommandHandler {
         switch (text) {
             case YES_VOLUNTEER:
                 volunteerSendMessageService.sendMessageToVolunteer(update.getCallbackQuery().getMessage().getChatId());
-                //todo дописать вызов метода
                 return "Ваши котакты переданы волонтеру, скоро с Вами свяжутся";
             case NO_VOLUNTEER:
                 return "Вы перешли в стартовое меню";
