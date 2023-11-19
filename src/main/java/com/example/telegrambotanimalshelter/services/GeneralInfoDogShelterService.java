@@ -25,6 +25,7 @@ public class GeneralInfoDogShelterService implements CommandHandler {
     private final String ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER = "ADDRESS_AND_SCHEDULE_OF_DOG_SHELTER";
     private final String SECURITY_INFO_OF_DOG_SHELTER = "SECURITY_INFO_OF_DOG_SHELTER";
     private final String DOG_SAFETY_RECOMMENDATIONS = "DOG_SAFETY_RECOMMENDATIONS";
+    private final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
     private final String EXCEPTION = "Команда не распознана";
 
     Logger log = LoggerFactory.getLogger(GeneralInfoCatShelterService.class);
@@ -64,8 +65,8 @@ public class GeneralInfoDogShelterService implements CommandHandler {
         InlineKeyboardButton addressAndScheduleOfShelter = new InlineKeyboardButton("Расписание работы, адрес и схема проезда");
         InlineKeyboardButton contactInfoOfShelterSecurity = new InlineKeyboardButton("Контакты охраны для оформления пропуска на авто");
         InlineKeyboardButton generalSafetyRecommendations = new InlineKeyboardButton("Техника безопасности на территории приюта");
-        InlineKeyboardButton getAndSaveContactInfoAboutUser = new InlineKeyboardButton("Оставить контакты для обратной связи");
-        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
+        InlineKeyboardButton getAndSaveUserPhone = new InlineKeyboardButton("Оставить контакты для обратной связи");
+        //InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
 
 
         generalInfoAboutShelter.setCallbackData(GENERAL_INFO_ABOUT_DOG_SHELTER);
@@ -73,8 +74,8 @@ public class GeneralInfoDogShelterService implements CommandHandler {
         contactInfoOfShelterSecurity.setCallbackData(SECURITY_INFO_OF_DOG_SHELTER);
         generalSafetyRecommendations.setCallbackData(DOG_SAFETY_RECOMMENDATIONS);
 
-        getAndSaveContactInfoAboutUser.setCallbackData("USER_CONTACTS");
-        callVolunteer.setCallbackData("Call_Volunteer");
+        getAndSaveUserPhone.setCallbackData(LEAVE_CONTACTS);
+        //callVolunteer.setCallbackData("Call_Volunteer");
 
         List<List<InlineKeyboardButton>> rowInline = new ArrayList<>();
 
@@ -95,12 +96,12 @@ public class GeneralInfoDogShelterService implements CommandHandler {
         rowInline.add(rowInline4);
 
         List<InlineKeyboardButton> rowInline5 = new ArrayList<>();
-        rowInline5.add(getAndSaveContactInfoAboutUser);
+        rowInline5.add(getAndSaveUserPhone);
         rowInline.add(rowInline5);
 
-        List<InlineKeyboardButton> rowInline6 = new ArrayList<>();
-        rowInline6.add(callVolunteer);
-        rowInline.add(rowInline6);
+//        List<InlineKeyboardButton> rowInline6 = new ArrayList<>();
+//        rowInline6.add(callVolunteer);
+//        rowInline.add(rowInline6);
 
         inlineKeyboardMarkup.setKeyboard(rowInline);
 
