@@ -69,4 +69,21 @@ public class VolunteerSendMessageService {
             }
         }
     }
+
+    public void sendMessageToVolunteer(Long chatIdSubscriber, String text) {
+        int volunteerChatId = getChatId();
+        if (volunteerChatId != -1) {
+            String chatId = String.valueOf(volunteerChatId);
+            Subscriber subscriber = subscriberRepository.findByChatId(chatIdSubscriber);
+
+            SendMessage message = new SendMessage(chatId, text);
+            try {
+                telegramBot.execute(message);
+                log.info(String.valueOf(HttpStatus.SC_OK));
+            } catch (TelegramApiException e) {
+                log.error(ERROR, e);
+            }
+        }
+    }
+
 }

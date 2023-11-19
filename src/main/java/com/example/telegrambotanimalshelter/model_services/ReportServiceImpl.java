@@ -1,6 +1,7 @@
 package com.example.telegrambotanimalshelter.model_services;
 
 
+import com.example.telegrambotanimalshelter.components.VolunteerSendMessageService;
 import com.example.telegrambotanimalshelter.models.Adopter;
 import com.example.telegrambotanimalshelter.models.Report;
 import com.example.telegrambotanimalshelter.models.Subscriber;
@@ -9,7 +10,6 @@ import com.example.telegrambotanimalshelter.services.CommandHandler;
 import com.example.telegrambotanimalshelter.services.TelegramBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -19,6 +19,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,13 +30,17 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
     private final ReportRepository reportRepository;
     private final AdopterService adopterService;
     private final TelegramBot telegramBot;
+    private final VolunteerSendMessageService volunteerSendMessageService;
 
     public ReportServiceImpl(@Lazy TelegramBot telegramBot, UploadReportPhoto uploadAvatar
-            , ReportRepository reportRepository, AdopterService adopterService) {
+            , ReportRepository reportRepository, AdopterService adopterService
+            , VolunteerSendMessageService volunteerSendMessageService) {
+
         this.telegramBot = telegramBot;
         this.uploadReportPhoto = uploadAvatar;
         this.reportRepository = reportRepository;
         this.adopterService = adopterService;
+        this.volunteerSendMessageService = volunteerSendMessageService;
     }
 
 
@@ -93,7 +98,7 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
 
         reportRepository.save(report);
         if (report.getReport() == null) {
-            return "В отчете не хватает описания состояния животного. ";
+            return "В отчете не хватает описания состояния животного.";
         } else if (report.getPhotoPath() == null) {
             return "В отчете не хватает фото.";
         } else {
@@ -103,17 +108,38 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
                     ". Спасибо за обратную связь";
         }
     }
-    @Scheduled(cron = "0 0 21 * * *")
+    @Scheduled(cron = "0 0 14 * * *")
     public void checkingTheSendingOfTheDailyReport() {
         //получаем связи усыновления, для которых еще не прошел испытательный срок
         List<Adopter> adopterList = adopterService.getActualAdopter();
         //список усыновлений, для которых не прислали отчет
         List<Adopter> adopterList2 = new ArrayList<>();
         Set<Long> adopterIdListFromTodaySReports = reportRepository.getAdopterIdFromTodaySReport(LocalDate.now());
-
+        String text = "Этот нехороший человек уже 2 дня не отправляет отчет. ";
         for (Adopter adopter: adopterList) {
             if (!adopterIdListFromTodaySReports.contains(adopter.getId())) {
                 adopterList2.add(adopter);
+
+            }
+        }
+
+        for (Adopter adopter : adopterList2) {
+            //ищем последний отчет для усыновления
+//            Report lastReport = reportRepository.findLastReportByAdopterId(adopter.getId());
+            LocalDate lastReportDate = reportRepository.findLastReportByAdopterId(adopter.getId());
+            //определяем сколько дней прошло с последнего отчета
+            int daysHavePassed;
+            if (lastReportDate != null) {
+                daysHavePassed = LocalDate.now().compareTo(lastReportDate);
+            } else{
+                daysHavePassed = LocalDate.now().compareTo(adopter.getAdoptionDate());
+            }
+                if (daysHavePassed >= 2) {
+
+                Subscriber subscriber = adopter.getSubscriber();
+                String message = text + " " + subscriber.toString();
+                volunteerSendMessageService.sendMessageToVolunteer(subscriber.getChatId(), message);
+            } else {
                 sendReminder(adopter.getSubscriber());
             }
         }
