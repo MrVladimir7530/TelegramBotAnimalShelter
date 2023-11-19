@@ -42,16 +42,14 @@ public class UploadReportPhotoImpl implements UploadReportPhoto {
      * @return
      */
     @Override
-    public String upload(Update update) {
+    public String upload(Update update) throws IOException {
         logger.info("Was invoked method for upload of Report Photo ");
 
         //получаем объект PhotoSize из массива объектов PhotoSize в Update
         PhotoSize photoSize = update.getMessage().getPhoto().get(0);
         String photoId = photoSize.getFileId();
-        //Get запрос к Telegram Api для получения тела ответа в виде массива строк
-        ResponseEntity<String> response = getPhotoPath(photoId);
-        //Получение uri из объекта ResponseEntity<String>
-        String photoPath = getPhotoPath(response);
+        //Получение url из объекта ResponseEntity<String> полученного через Get запрос к TelegramBotApi
+        String photoPath = getPhotoPath(photoId);
         //Получение имени и расширения файла из пути файла.
         String photoName = getPhotoName(photoPath);
 
@@ -64,12 +62,13 @@ public class UploadReportPhotoImpl implements UploadReportPhoto {
         }
         URL downloadPhotoUri = null;
         try {
-            downloadPhotoUri = new URL(photoDownloadPathUri);
-
+            downloadPhotoUri = new URL(photoDownloadPathUri.replace("{token}", token).replace("{photoPath}", photoPath));
+            System.out.println(downloadPhotoUri.toString() +" "+token+ " "+ photoPath);
         } catch (MalformedURLException e) {
             logger.error("Неправильный URL");
         }
         try (
+
                 InputStream is = downloadPhotoUri.openStream();
                 OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
@@ -77,10 +76,8 @@ public class UploadReportPhotoImpl implements UploadReportPhoto {
         ) {
             bis.transferTo(bos);
             return String.valueOf(filePath);
-        } catch (IOException e) {
-            logger.error("Ошибка загрузки фото");
-            return "Загрузка фото не удалась ((";
         }
+
 
     }
 
@@ -91,21 +88,28 @@ public class UploadReportPhotoImpl implements UploadReportPhoto {
      * @param photoId
      * @return ResponseEntity<><'String'>
      */
-    private ResponseEntity<String> getPhotoPath(String photoId) {
+    private String getPhotoPath(String photoId) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<HttpHeaders> request = new HttpEntity<>(headers);
 
-        return restTemplate.exchange(
+        ResponseEntity<String> response = restTemplate.exchange(
                 photoInfoUri,
                 HttpMethod.GET,
                 request,
                 String.class,
                 token, photoId
         );
+
+        return getPhotoPath(response);
     }
 
-    //Получение пути файла из объекта ResponseEntity<String>, полученного с Telegram Api
+
+    /**Получение пути файла из объекта ResponseEntity<String>, полученного с Telegram Api
+     *
+     * @param response
+     * @return String
+     */
     private String getPhotoPath(ResponseEntity<String> response) {
         JSONObject jsonObject = new JSONObject(response.getBody());
         return String.valueOf(jsonObject

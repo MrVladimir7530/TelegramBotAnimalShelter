@@ -1,6 +1,7 @@
 package com.example.telegrambotanimalshelter.rellocations;
 
 import com.example.telegrambotanimalshelter.model_services.PhoneNumberFromMessage;
+import com.example.telegrambotanimalshelter.model_services.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +35,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
     private final ReportButtonAnswerService reportButtonAnswerService;
     private final PhoneNumberFromMessage phoneNumberFromMessage;
     private final PhoneMenu phoneMenu;
+    private final ReportService reportService;
 
     @PostConstruct
     public void init() {
@@ -42,6 +44,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         commandHandlerMap.put("CAT", animalMenu);
         commandHandlerMap.put("DOG", animalMenu);
         commandHandlerMap.put("REPORT", reportButtonAnswerService);
+        commandHandlerMap.put("Daily_Report_Form", reportButtonAnswerService);
         commandHandlerMap.put("LEAVE_CONTACTS", phoneMenu);
         commandHandlerMap.put("YES_VOLUNTEER", startMenu);
         commandHandlerMap.put("NO_VOLUNTEER", startMenu);
@@ -84,6 +87,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
 
     /**
      * Метод для распределения обновлений по сервисам. Возвращает сообщение для отправки пользователю.
+     *
      * @param update
      * @return SendMessage
      */
@@ -92,20 +96,23 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         log.info("The process method of the ReallocationOfTeamsImpl class was called");
         SendMessage message = new SendMessage();
 
-        if (update.hasCallbackQuery()){
-            if(commandHandlerMap.containsKey(update.getCallbackQuery().getData())) {
+        if (update.hasCallbackQuery()) {
+            if (commandHandlerMap.containsKey(update.getCallbackQuery().getData())) {
                 CommandHandler commandHandler = commandHandlerMap.get(update.getCallbackQuery().getData());
                 message = commandHandler.process(update);
-            }else {
+            } else {
                 message.setChatId(update.getCallbackQuery().getFrom().getId());
                 message.setText("Команда не распознана");
             }
 
+        } else if (update.hasMessage() && update.getMessage().hasPhoto()) {
+            message = reportService.process(update);
+        } else if (update.hasMessage() && update.getMessage().hasDocument()) {
+            message = reportService.process(update);
         } else if (update.hasMessage() && commandHandlerMap.containsKey(update.getMessage().getText())) {
-
             CommandHandler commandHandler = commandHandlerMap.get(update.getMessage().getText());
             message = commandHandler.process(update);
-        } else if (phoneNumberFromMessage.parsingPhone(update)) {
+        } else if (phoneNumberFromMessage.parsingPhone(update) && !update.getMessage().getText().isEmpty()) {
             phoneNumberFromMessage.savePhone(update);
             message = phoneMenu.process(update);
         } else {
@@ -116,10 +123,6 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
 
         return message;
     }
-
-
-
-
 
 
 }

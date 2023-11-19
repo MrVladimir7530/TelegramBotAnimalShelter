@@ -1,5 +1,11 @@
 package com.example.telegrambotanimalshelter.model_services;
 
-public interface VolunteerService {
+import com.example.telegrambotanimalshelter.models.Volunteer;
 
+public interface VolunteerService {
+    Volunteer addVolunteer(Volunteer volunteer);
+
+    Volunteer getVolunteer(Long chatId);
+
+    void deleteVolunteer(Long chatId);
 }

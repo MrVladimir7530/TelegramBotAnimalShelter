@@ -1,6 +1,7 @@
 package com.example.telegrambotanimalshelter.services;
 
 
+import com.example.telegrambotanimalshelter.components.VolunteerSendMessageService;
 import com.example.telegrambotanimalshelter.models.Subscriber;
 import com.example.telegrambotanimalshelter.model_services.SubscriberService;
 
@@ -22,15 +23,19 @@ import java.util.List;
 /**
  * Сервис для обработки команды /start, /cancel
  */
-public class StartMenu implements CommandHandler{
+public class StartMenu implements CommandHandler {
     Logger log = LoggerFactory.getLogger(StartMenu.class);
     private final String YES_VOLUNTEER = "YES_VOLUNTEER";
     private final String NO_VOLUNTEER = "NO_VOLUNTEER";
     @Autowired
     private final SubscriberService subscriberService;
 
+    private final VolunteerSendMessageService volunteerSendMessageService;
+    //todo возможно надо удалить
+
     /**
      * Метод для обработки входящего обновления и возврата сообщения
+     *
      * @param update
      * @return SendMessage
      */
@@ -53,6 +58,7 @@ public class StartMenu implements CommandHandler{
 
     /**
      * Метод для создания и возврата инлайн клавиатуры
+     *
      * @return InlineKeyboardMarkup
      */
     private InlineKeyboardMarkup createInlineKeyboard() {
@@ -66,7 +72,6 @@ public class StartMenu implements CommandHandler{
         dogButton.setCallbackData("DOG");
         reportButton.setCallbackData("REPORT");
         volunteerInputButton.setCallbackData("VOLUNTEER_INPUT");
-
 
 
         List<InlineKeyboardButton> catButtonList = new ArrayList<>();
@@ -86,7 +91,7 @@ public class StartMenu implements CommandHandler{
 
 
         inlineKeyboardMarkup.setKeyboard(startButtonList);
-        return  inlineKeyboardMarkup;
+        return inlineKeyboardMarkup;
 
 
     }
@@ -95,6 +100,7 @@ public class StartMenu implements CommandHandler{
         String text = update.getCallbackQuery().getData();
         switch (text) {
             case YES_VOLUNTEER:
+                volunteerSendMessageService.sendMessageToVolunteer(update.getCallbackQuery().getMessage().getChatId());
                 return "Ваши котакты переданы волонтеру, скоро с Вами свяжутся";
             case NO_VOLUNTEER:
                 return "Вы перешли в стартовое меню";

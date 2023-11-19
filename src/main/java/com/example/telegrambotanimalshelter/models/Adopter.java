@@ -9,7 +9,7 @@ public class Adopter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate adoptionDate;
-    private Integer trialPeriod;
+    private Integer trialPeriod = 30;
     @OneToOne()
     @JoinColumn(name = "subscriber_id")
     private Subscriber subscriber;

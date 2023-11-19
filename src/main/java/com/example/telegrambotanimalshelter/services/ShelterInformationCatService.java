@@ -1,5 +1,7 @@
 package com.example.telegrambotanimalshelter.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import java.util.List;
 @Service
 @PropertySource(value = "getInfoAboutCat.text", encoding = "UTF-8")
 public class ShelterInformationCatService implements CommandHandler{
+    Logger log = LoggerFactory.getLogger(ShelterInformationCatService.class);
     private String EXCEPTION = "Ошибка команды, пожалуйста повторите действие";
     private final String HOW_TO_TAKE_CAT = "HOW_TO_TAKE_CAT";
     private final String INFO_GET_CAT = "INFO_GET_CAT";
@@ -44,6 +47,7 @@ public class ShelterInformationCatService implements CommandHandler{
 
     @Override
     public SendMessage process(Update update) {
+        log.info("got into ShelterInformationCatService");
         SendMessage message = new SendMessage();
         message.setChatId(update.getCallbackQuery().getFrom().getId());
         message.setReplyMarkup(createInlineKeyboard());
@@ -106,6 +110,7 @@ public class ShelterInformationCatService implements CommandHandler{
     }
 
     public String choiceWay(Update update) {
+        log.info("Choosing way into ShelterInformationCatService");
         String text = update.getCallbackQuery().getData();
         switch (text) {
             case HOW_TO_TAKE_CAT:

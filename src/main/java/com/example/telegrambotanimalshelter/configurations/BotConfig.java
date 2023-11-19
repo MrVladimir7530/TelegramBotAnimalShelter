@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
+/**
+ * Компонент отвечабщий за токен и имя бота
+ */
 @Data
 @Configuration
 @PropertySource("application.properties")
