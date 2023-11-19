@@ -112,7 +112,7 @@ public class ReallocationOfTeamsImpl implements ReallocationOfTeams {
         } else if (update.hasMessage() && commandHandlerMap.containsKey(update.getMessage().getText())) {
             CommandHandler commandHandler = commandHandlerMap.get(update.getMessage().getText());
             message = commandHandler.process(update);
-        } else if (phoneNumberFromMessage.parsingPhone(update)) {
+        } else if (phoneNumberFromMessage.parsingPhone(update) && !update.getMessage().getText().isEmpty()) {
             phoneNumberFromMessage.savePhone(update);
             message = phoneMenu.process(update);
         } else {
