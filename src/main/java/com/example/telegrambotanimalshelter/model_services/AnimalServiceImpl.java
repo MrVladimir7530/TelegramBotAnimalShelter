@@ -31,7 +31,7 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     public Collection<Animal> getAllAnimalsByType(String animalType) {
         log.info("Animals are found by animal type: {}", animalType);
-        return animalRepository.getAllAnimalsByType(animalType);
+        return animalRepository.getAllAnimalsByAnimalType(animalType);
     }
 
     @Override

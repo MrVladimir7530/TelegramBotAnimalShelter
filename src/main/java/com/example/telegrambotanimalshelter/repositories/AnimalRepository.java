@@ -12,9 +12,9 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     Animal findByName(String animalName);
 
     @Query(value = "SELECT an.* FROM animal AS an " +
-            "JOIN SHELTER AS sh ON an.shelter_id = sh.id" +
-            "WHERE sh.name = animalType", nativeQuery = true)
-    Collection<Animal> getAllAnimalsByType(String animalType);
+            "JOIN shelter AS sh ON an.shelter_id = sh.id " +
+            "WHERE sh.name = ?1", nativeQuery = true)
+    Collection<Animal> getAllAnimalsByAnimalType(String animalType);
 
     @Query(value = "SELECT an.* FROM animal AS an " +
             "JOIN adopter AS ad ON an.id = ad.animal_id", nativeQuery = true)
@@ -23,6 +23,6 @@ public interface AnimalRepository extends JpaRepository<Animal, Long> {
     @Query(value = "SELECT an.* FROM animal an " +
             "JOIN SHELTER AS sh ON an.shelter_id = sh.id " +
             "JOIN adopter AS ad ON an.id = ad.animal_id " +
-            "WHERE sh.name = animalType", nativeQuery = true)
+            "WHERE sh.name = ?1", nativeQuery = true)
     Collection<Animal> getAdoptedAnimalsByType(String animalType);
 }

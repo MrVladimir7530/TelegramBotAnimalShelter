@@ -9,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequestMapping("/animals")
 public class AnimalController {
@@ -46,11 +48,12 @@ public class AnimalController {
     @GetMapping
     public ResponseEntity getAnimals(@Parameter(example = "Мурзик") @RequestParam(required = false, name = "Имя животного") String animalName,
                                      @Parameter(example = "Приют кошек / Приют собак") @RequestParam(required = false, name = "Тип приюта") String shelterType) {
-        if (animalName != null && !animalName.isBlank() && shelterType.isBlank()) {
-            return ResponseEntity.ok(animalService.getAnimalByName(shelterType));
+        if (animalName != null && !animalName.isBlank() && shelterType == null) {
+            return ResponseEntity.ok(animalService.getAnimalByName(animalName));
         }
-        if (shelterType != null && !shelterType.isBlank() && animalName.isBlank()) {
-            return ResponseEntity.ok(animalService.getAllAnimalsByType(shelterType));
+        if (shelterType != null && !shelterType.isBlank() && animalName == null) {
+            final Collection<Animal> allAnimalsByType = animalService.getAllAnimalsByType(shelterType);
+            return ResponseEntity.ok(allAnimalsByType);
         }
         return ResponseEntity.ok(animalService.getAllAnimals());
     }

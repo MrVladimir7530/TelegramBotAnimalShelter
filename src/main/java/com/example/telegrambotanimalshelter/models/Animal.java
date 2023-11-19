@@ -16,7 +16,6 @@ public class Animal {
 
     private String breed;
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name ="shelter_id")
     private Shelter shelter;
 
