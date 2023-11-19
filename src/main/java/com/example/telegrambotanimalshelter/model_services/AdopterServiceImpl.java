@@ -50,25 +50,30 @@ public class AdopterServiceImpl implements AdopterService {
     }
 
     @Override
-    public int editTrialPeriod(Long adopterId, Integer days, Boolean probationPeriodPassed) {
+    public Adopter editTrialPeriod(Long adopterId, Integer days, Boolean probationPeriodPassed) {
         logger.info("Was invoked method for edit trial period of Adopter");
         Adopter adopter = null;
         try {
             adopter = adopterRepository.findById(adopterId).get();
         } catch (NoSuchElementException e) {
-            System.out.println("Неправильный ID усыновителя");
+            throw new NoSuchElementException("Неправильный ID усыновителя");
         }
         if (probationPeriodPassed != null) {
             if (probationPeriodPassed) {
                 sendDefaultHappyMessage(adopter);
+                adopter.setTrialPeriod(0);
             } else {
                 sendDefaultSadMessage(adopter);
+                adopter.setTrialPeriod(0);
             }
 
         } else {
+            int modifiedTrialPeriod = adopter.getTrialPeriod()+days;
+            adopter.setTrialPeriod(modifiedTrialPeriod);
             sendEditTrialPeriodMessage(adopter, days);
         }
-        return 1;
+        adopterRepository.save(adopter);
+        return adopter;
     }
 
     private void sendDefaultHappyMessage(Adopter adopter) {
@@ -82,7 +87,7 @@ public class AdopterServiceImpl implements AdopterService {
     private void sendEditTrialPeriodMessage(Adopter adopter, Integer days) {
         SendMessage message = new SendMessage();
         message.setChatId(adopter.getSubscriber().getChatId());
-        message.setText("Уважаемый " + adopter.getSubscriber().getUserName() +
+        message.setText("Уважаемый " + adopter.getSubscriber().getName() +
                 " мы вынужены добавить вам испытательный срок на " + days + " дней.");
         prepareAndSendMessage(message);
     }
@@ -90,7 +95,7 @@ public class AdopterServiceImpl implements AdopterService {
     private void sendDefaultSadMessage(Adopter adopter) {
         SendMessage message = new SendMessage();
         message.setChatId(adopter.getSubscriber().getChatId());
-        message.setText("Нам очень жаль, но вы не смогли прошли испытательный срок" +
+        message.setText("Нам очень жаль, но вы не смогли пройти испытательный срок" +
                 ". Вам нужно выполнить следующие шаги: Какие-то шаги...");
         prepareAndSendMessage(message);
     }
