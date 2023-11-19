@@ -8,7 +8,7 @@ public class Adopter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate adoptionDate;
+    private LocalDate adoptionDate = LocalDate.now();
     private Integer trialPeriod = 30;
     @OneToOne()
     @JoinColumn(name = "subscriber_id")
@@ -22,8 +22,6 @@ public class Adopter {
     }
 
     public Adopter(Subscriber subscriber, Animal animal) {
-        this.adoptionDate = LocalDate.now();
-        this.trialPeriod = 30;
         this.subscriber = subscriber;
         this.animal = animal;
     }

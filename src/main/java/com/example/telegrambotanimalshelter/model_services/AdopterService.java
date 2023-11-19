@@ -12,5 +12,5 @@ public interface AdopterService {
 
     Adopter create(Adopter adopter);
 
-    int editTrialPeriod(Long adopterId, Integer days, Boolean probationPeriodPassed);
+    Adopter editTrialPeriod(Long adopterId, Integer days, Boolean probationPeriodPassed);
 }
