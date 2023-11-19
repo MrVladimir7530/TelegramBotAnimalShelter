@@ -20,12 +20,9 @@ public class AnimalController {
 
     @Operation(
             summary = "Добавление животного",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Добавленное животное"
-                    )
-            },
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Добавляемое животное"
+            ),
             tags = "Animals"
     )
     @PostMapping
@@ -47,13 +44,13 @@ public class AnimalController {
             tags = "Animals"
     )
     @GetMapping
-    public ResponseEntity getAnimals(@Parameter(example = "Приют кошек / Приют собак") @RequestParam(required = false, name = "Тип приюта") String shelterType,
-                                     @RequestParam(required = false) String animalType) {
-        if (shelterType != null && !shelterType.isBlank() && animalType.isBlank()) {
+    public ResponseEntity getAnimals(@Parameter(example = "Мурзик") @RequestParam(required = false, name = "Имя животного") String animalName,
+                                     @Parameter(example = "Приют кошек / Приют собак") @RequestParam(required = false, name = "Тип приюта") String shelterType) {
+        if (animalName != null && !animalName.isBlank() && shelterType.isBlank()) {
             return ResponseEntity.ok(animalService.getAnimalByName(shelterType));
         }
-        if (animalType != null && !animalType.isBlank() && shelterType.isBlank()) {
-            return ResponseEntity.ok(animalService.getAllAnimalsByType(animalType));
+        if (shelterType != null && !shelterType.isBlank() && animalName.isBlank()) {
+            return ResponseEntity.ok(animalService.getAllAnimalsByType(shelterType));
         }
         return ResponseEntity.ok(animalService.getAllAnimals());
     }
@@ -80,12 +77,9 @@ public class AnimalController {
 
     @Operation(
             summary = "Изменение животного по ID",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Результат правок"
-                    )
-            },
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Редактируемое животное"
+            ),
             tags = "Animals"
     )
     @PutMapping

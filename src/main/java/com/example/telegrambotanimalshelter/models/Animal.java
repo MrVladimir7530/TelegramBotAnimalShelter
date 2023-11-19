@@ -11,9 +11,9 @@ public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonIgnore
+
     private String name;
-    @JsonIgnore
+
     private String breed;
     @ManyToOne
     @JsonIgnore

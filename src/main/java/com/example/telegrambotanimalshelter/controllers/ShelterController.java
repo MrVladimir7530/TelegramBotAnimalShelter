@@ -21,12 +21,9 @@ public class ShelterController {
 
     @Operation(
             summary = "Добавление приюта",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Добавленное приюта"
-                    )
-            },
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Добавляемый приют"
+            ),
             tags = "Shelters"
     )
     @PostMapping
@@ -35,7 +32,7 @@ public class ShelterController {
     }
 
     @Operation(
-            summary = "Возвращает конкретных приют",
+            summary = "Возвращает конкретный приют",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -65,18 +62,15 @@ public class ShelterController {
     }
 
     @Operation(
-            summary = "Изменение приюта по типу",
-            responses = {
-                    @ApiResponse(
-                            responseCode = "200",
-                            description = "Результат правок"
-                    )
-            },
+            summary = "Изменение приюта по ID",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Редактируемый приют"
+            ),
             tags = "Shelters"
     )
     @PutMapping
-    public Shelter updateShelter(@Parameter(example = "Приют кошек / Приют собак") @PathVariable(name = "Тип приюта") String shelterType, @RequestBody Shelter shelter) {
-        return shelterService.updateShelter(shelterType, shelter);
+    public Shelter updateShelter( @PathVariable(name = "ID") Long id, @RequestBody Shelter shelter) {
+        return shelterService.updateShelter(id, shelter);
     }
 
     @Operation(
@@ -90,7 +84,7 @@ public class ShelterController {
             tags = "Shelters"
     )
     @DeleteMapping
-    public void deleteShelter(@Parameter(example = "Приют кошек / Приют собак") @PathVariable(name = "Тип приюта") String shelterType) {
-        shelterService.deleteShelter(shelterType);
+    public void deleteShelter(@PathVariable(name = "ID") Long id) {
+        shelterService.deleteShelter(id);
     }
 }

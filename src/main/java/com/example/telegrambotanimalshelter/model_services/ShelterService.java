@@ -11,7 +11,7 @@ public interface ShelterService {
 
     Collection<Shelter> getAllShelters();
 
-    Shelter updateShelter(String shelterType, Shelter shelter);
+    Shelter updateShelter(Long id, Shelter shelter);
 
-    void deleteShelter(String shelterType);
+    void deleteShelter(Long id);
 }

@@ -36,14 +36,14 @@ public class ShelterServiceImpl implements ShelterService {
     }
 
     @Override
-    public Shelter updateShelter(String shelterType, Shelter shelter) {
-        log.info("Shelter is updated by shelter type: {}", shelterType);
+    public Shelter updateShelter(Long id, Shelter shelter) {
+        log.info("Shelter is updated by id: {}", id);
         return shelterRepository.save(shelter);
     }
 
     @Override
-    public void deleteShelter(String shelterType) {
-        log.info("Shelter is deleted by shelter type: {}", shelterType);
-        shelterRepository.deleteShelterByName(shelterType);
+    public void deleteShelter(Long id) {
+        log.info("Shelter is deleted by id: {}", id);
+        shelterRepository.deleteById(id);
     }
 }

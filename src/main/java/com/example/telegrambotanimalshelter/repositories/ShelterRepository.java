@@ -15,5 +15,4 @@ public interface ShelterRepository extends JpaRepository<Shelter, Long> {
     @Query(value = "SELECT name FROM shelter", nativeQuery = true)
     List<String> getAllShelterNames();
 
-    void deleteShelterByName(String shelterType);
 }
