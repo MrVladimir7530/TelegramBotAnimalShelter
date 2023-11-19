@@ -36,6 +36,9 @@ public class VolunteerSendMessageService {
 
     private int getChatId() {
         int count = (int) volunteerRepository.count();
+        if (count == 0) {
+            return -1;
+        }
         Random random = new Random();
         int check = random.nextInt(count);
         List<Volunteer> volunteers = volunteerRepository.findAll();
