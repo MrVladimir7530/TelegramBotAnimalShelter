@@ -61,12 +61,12 @@ public class ReportButtonAnswerService implements CommandHandler {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         InlineKeyboardButton dailyReportForm = new InlineKeyboardButton("Форма ежедневного отчета");
-        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
+        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Оставить контакты и позвать волонтера");
         InlineKeyboardButton cancel = new InlineKeyboardButton("Выход");
 
 
         dailyReportForm.setCallbackData("Daily_Report_Form");
-        callVolunteer.setCallbackData("Call_Volunteer");
+        callVolunteer.setCallbackData("LEAVE_CONTACTS");
         cancel.setCallbackData("/cancel");
 
         List<InlineKeyboardButton> dailyReportFormList = new ArrayList<>();
