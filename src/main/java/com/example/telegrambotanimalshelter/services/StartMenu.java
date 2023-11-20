@@ -27,11 +27,11 @@ public class StartMenu implements CommandHandler {
     Logger log = LoggerFactory.getLogger(StartMenu.class);
     private final String YES_VOLUNTEER = "YES_VOLUNTEER";
     private final String NO_VOLUNTEER = "NO_VOLUNTEER";
+    private final String CANCEL = "/cancel";
     @Autowired
     private final SubscriberService subscriberService;
 
     private final VolunteerSendMessageService volunteerSendMessageService;
-    //todo возможно надо удалить
 
     /**
      * Метод для обработки входящего обновления и возврата сообщения
@@ -66,12 +66,10 @@ public class StartMenu implements CommandHandler {
         InlineKeyboardButton catButton = new InlineKeyboardButton("Приют для кошек");
         InlineKeyboardButton dogButton = new InlineKeyboardButton("Приют для собак");
         InlineKeyboardButton reportButton = new InlineKeyboardButton("Отправить отчет");
-        InlineKeyboardButton volunteerInputButton = new InlineKeyboardButton("Войти как волонтер");
 
         catButton.setCallbackData("CAT");
         dogButton.setCallbackData("DOG");
         reportButton.setCallbackData("REPORT");
-        volunteerInputButton.setCallbackData("VOLUNTEER_INPUT");
 
 
         List<InlineKeyboardButton> catButtonList = new ArrayList<>();
@@ -80,15 +78,11 @@ public class StartMenu implements CommandHandler {
         dogButtonList.add(dogButton);
         List<InlineKeyboardButton> reportButtonList = new ArrayList<>();
         reportButtonList.add(reportButton);
-        List<InlineKeyboardButton> volunteerButtonList = new ArrayList<>();
-        reportButtonList.add(volunteerInputButton);
 
         List<List<InlineKeyboardButton>> startButtonList = new ArrayList<>();
         startButtonList.add(catButtonList);
         startButtonList.add(dogButtonList);
         startButtonList.add(reportButtonList);
-        startButtonList.add(volunteerButtonList);
-
 
         inlineKeyboardMarkup.setKeyboard(startButtonList);
         return inlineKeyboardMarkup;
@@ -104,6 +98,8 @@ public class StartMenu implements CommandHandler {
                 return "Ваши котакты переданы волонтеру, скоро с Вами свяжутся";
             case NO_VOLUNTEER:
                 return "Вы перешли в стартовое меню";
+            case CANCEL:
+                return "Вы вернулись в стартовое меню";
             default:
                 return "комманда не распознана";
         }

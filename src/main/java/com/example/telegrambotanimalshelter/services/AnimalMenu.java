@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Service
 public class AnimalMenu implements CommandHandler {
+    private final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
     Logger log = LoggerFactory.getLogger(AnimalMenu.class);
 
     /**
@@ -45,7 +46,7 @@ public class AnimalMenu implements CommandHandler {
 
         InlineKeyboardButton getInfoAboutShelter = new InlineKeyboardButton("Узнать информацию о приюте");
         InlineKeyboardButton informationAboutAnimalAdoption = new InlineKeyboardButton("Как взять животное из приюта");
-        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
+        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Оставить контакты и позвать волонтера");
 
         if (update.getCallbackQuery().getData().equals("CAT")) {
             getInfoAboutShelter.setCallbackData("CAT_INFO");
@@ -56,7 +57,7 @@ public class AnimalMenu implements CommandHandler {
             getInfoAboutShelter.setCallbackData("DOG_INFO");
             informationAboutAnimalAdoption.setCallbackData("HOW_TO_TAKE_DOG");
         }
-        callVolunteer.setCallbackData("Call_Volunteer");
+        callVolunteer.setCallbackData(LEAVE_CONTACTS);
 
         List<InlineKeyboardButton> catButtonList = new ArrayList<>();
         catButtonList.add(getInfoAboutShelter);
