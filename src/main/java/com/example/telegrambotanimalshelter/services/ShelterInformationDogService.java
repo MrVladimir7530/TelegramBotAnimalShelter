@@ -36,6 +36,7 @@ public class ShelterInformationDogService implements CommandHandler {
     private final String REASONS_FOR_REFUSAL_FROM_DOG = "REASONS_FOR_REFUSAL_FROM_DOG";
     private final String DOG_HANDLER_RECOMMENDATIONS = "DOG_HANDLER_RECOMMENDATIONS";
     private final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
+    private final String CANCEL = "/cancel";
 
     @Value("${HOW_TO_TAKE_DOG_ANSWER}")
     private String HOW_TO_TAKE_DOG_ANSWER;
@@ -83,6 +84,7 @@ public class ShelterInformationDogService implements CommandHandler {
         InlineKeyboardButton reasonsForRefusalFromDog = new InlineKeyboardButton("Причины отказа для собаки");
         InlineKeyboardButton dogHandlerRecommendations = new InlineKeyboardButton("Получить контакты кинологов");
         InlineKeyboardButton phoneNumber = new InlineKeyboardButton("Оставить контакты");
+        InlineKeyboardButton cancel = new InlineKeyboardButton("Выход");
 
         infoGetAnimal.setCallbackData(INFO_GET_DOG);
         infoNeedDocumentation.setCallbackData(INFO_NEED_DOCUMENTATION_FOR_DOG);
@@ -95,6 +97,7 @@ public class ShelterInformationDogService implements CommandHandler {
         reasonsForRefusalFromDog.setCallbackData(REASONS_FOR_REFUSAL_FROM_DOG);
         dogHandlerRecommendations.setCallbackData(DOG_HANDLER_RECOMMENDATIONS);
         phoneNumber.setCallbackData(LEAVE_CONTACTS);
+        cancel.setCallbackData(CANCEL);
 
         List<InlineKeyboardButton> infoGetAnimalList = new ArrayList<>();
         List<InlineKeyboardButton> infoNeedDocumentationList = new ArrayList<>();
@@ -107,6 +110,7 @@ public class ShelterInformationDogService implements CommandHandler {
         List<InlineKeyboardButton> reasonsForRefusalFromDogList = new ArrayList<>();
         List<InlineKeyboardButton> dogHandlerRecommendationsList = new ArrayList<>();
         List<InlineKeyboardButton> phoneNumberList = new ArrayList<>();
+        List<InlineKeyboardButton> cancelButtonList = new ArrayList<>();
 
         infoGetAnimalList.add(infoGetAnimal);
         infoNeedDocumentationList.add(infoNeedDocumentation);
@@ -119,6 +123,7 @@ public class ShelterInformationDogService implements CommandHandler {
         reasonsForRefusalFromDogList.add(reasonsForRefusalFromDog);
         dogHandlerRecommendationsList.add(dogHandlerRecommendations);
         phoneNumberList.add(phoneNumber);
+        cancelButtonList.add(cancel);
 
         List<List<InlineKeyboardButton>> infoShelterList = new ArrayList<>();
         infoShelterList.add(infoGetAnimalList);
@@ -132,6 +137,7 @@ public class ShelterInformationDogService implements CommandHandler {
         infoShelterList.add(reasonsForRefusalFromDogList);
         infoShelterList.add(dogHandlerRecommendationsList);
         infoShelterList.add(phoneNumberList);
+        infoShelterList.add(cancelButtonList);
 
         inlineKeyboardMarkup.setKeyboard(infoShelterList);
         return inlineKeyboardMarkup;

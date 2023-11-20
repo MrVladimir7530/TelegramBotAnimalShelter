@@ -20,6 +20,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private final BotConfig botConfig;
     private static final String ERROR = "ERROR: ";
     private static final String textForCancel = "Вы вернулись в стартовое меню";
+
     @Override
     public String getBotUsername() {
         return botConfig.getBotName();
@@ -39,7 +40,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void prepareAndSendMessage(SendMessage message) {
-
         try {
             execute(message);
             log.info(String.valueOf(HttpStatus.SC_OK));

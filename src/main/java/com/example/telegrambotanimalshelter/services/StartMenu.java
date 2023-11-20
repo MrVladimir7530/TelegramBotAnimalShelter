@@ -27,6 +27,7 @@ public class StartMenu implements CommandHandler {
     Logger log = LoggerFactory.getLogger(StartMenu.class);
     private final String YES_VOLUNTEER = "YES_VOLUNTEER";
     private final String NO_VOLUNTEER = "NO_VOLUNTEER";
+    private final String CANCEL = "/cancel";
     @Autowired
     private final SubscriberService subscriberService;
 
@@ -104,6 +105,8 @@ public class StartMenu implements CommandHandler {
                 return "Ваши котакты переданы волонтеру, скоро с Вами свяжутся";
             case NO_VOLUNTEER:
                 return "Вы перешли в стартовое меню";
+            case CANCEL:
+                return "Вы вернулись в стартовое меню";
             default:
                 return "комманда не распознана";
         }
