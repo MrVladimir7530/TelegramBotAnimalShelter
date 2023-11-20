@@ -63,7 +63,8 @@ public class AdopterController {
                             responseCode = "200",
                             description = "Для добавления испытательного периода укажите количество добавляемых дней. " +
                                     "Для решения о прохождении испытательного срока укажите true в случае успешного прохождения " +
-                                    "и false в противном случае. Указать нужно только один из параметров.",
+                                    "и false в противном случае. Указать нужно только один из этих параметров." +
+                                    " Чат ID нужно указать в любов случае",
                             content = {
                                     @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                             schema = @Schema(implementation = Adopter.class)

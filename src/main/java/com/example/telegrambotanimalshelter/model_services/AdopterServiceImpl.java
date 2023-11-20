@@ -26,6 +26,11 @@ public class AdopterServiceImpl implements AdopterService {
         this.adopterRepository = adopterRepository;
     }
 
+    @Override
+    public List<Adopter> findAdoptersOfShelterAnimals(Long shelterId) {
+        return adopterRepository.findAdoptersOfShelterAnimals();
+    }
+
     public Adopter findById(Long id) {
         logger.info("Was invoked method for findById of Adopter by ID");
         return adopterRepository.findById(id).get();

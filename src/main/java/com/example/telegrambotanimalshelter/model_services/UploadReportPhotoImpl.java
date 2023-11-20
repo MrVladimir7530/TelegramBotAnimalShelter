@@ -44,10 +44,17 @@ public class UploadReportPhotoImpl implements UploadReportPhoto {
     @Override
     public String upload(Update update) throws IOException {
         logger.info("Was invoked method for upload of Report Photo ");
+        String photoId;
 
-        //получаем объект PhotoSize из массива объектов PhotoSize в Update
-        PhotoSize photoSize = update.getMessage().getPhoto().get(0);
-        String photoId = photoSize.getFileId();
+        if (update.getMessage().hasPhoto()) {
+            //получаем объект PhotoSize из массива объектов PhotoSize в Update
+            PhotoSize photoSize = update.getMessage().getPhoto().get(0);
+            photoId = photoSize.getFileId();
+
+        } else {
+            photoId = update.getMessage().getDocument().getFileId();
+        }
+
         //Получение url из объекта ResponseEntity<String> полученного через Get запрос к TelegramBotApi
         String photoPath = getPhotoPath(photoId);
         //Получение имени и расширения файла из пути файла.

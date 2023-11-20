@@ -45,6 +45,16 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
 
 
     @Override
+    public Report findById(long id) {
+        return reportRepository.findById(id).get();
+    }
+
+    @Override
+    public Report findByAdopterIdAndCreationDate(Long id, LocalDate creationDate) {
+        return reportRepository.findByAdopterIdAndCreationDate(id, creationDate);
+    }
+
+    @Override
     public SendMessage process(Update update) {
         logger.info("The process method of the ReportServiceImpl class was called");
         SendMessage message = new SendMessage();
@@ -78,7 +88,7 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
             report = new Report();
         }
 
-        if (update.getMessage().hasPhoto()) {
+        if (update.getMessage().hasPhoto()||update.getMessage().hasDocument()) {
             try {
                 report.setPhotoPath(uploadReportPhoto.upload(update));
             } catch (IOException e) {
