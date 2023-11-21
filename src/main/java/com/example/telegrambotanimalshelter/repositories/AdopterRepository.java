@@ -15,6 +15,6 @@ public interface AdopterRepository extends JpaRepository<Adopter, Long> {
             "Left Join animal on adopter.animal_id=animal.id " +
             "Left Join shelter on animal.shelter_id=shelter.id " +
             "where trial_period >0", nativeQuery = true)
-    List<Adopter> findAdoptersOfShelterAnimals();
+    List<Adopter> findAdoptersOfShelterAnimals(Long shelterId);
 
 }

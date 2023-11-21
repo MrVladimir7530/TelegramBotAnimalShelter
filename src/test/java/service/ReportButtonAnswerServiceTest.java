@@ -47,84 +47,48 @@ public class ReportButtonAnswerServiceTest {
         String textExpected = "Меню ежедневного отчета";
 
 
-//        InlineKeyboardMarkup expectedInlineKeyboardMarkup = createKeyboardMarkup(update);
+        InlineKeyboardMarkup expectedInlineKeyboardMarkup = createKeyboardMarkup(update);
         InlineKeyboardMarkup actualInlineKeyboardMarkup = (InlineKeyboardMarkup)actualMessage.getReplyMarkup();
         List<List<InlineKeyboardButton>> inlineKeyboardButtonListList= actualInlineKeyboardMarkup.getKeyboard();
 
-        boolean buttonDailyReportFormExist = false;
-        for (List<InlineKeyboardButton>inlineKeyboardButtonList: inlineKeyboardButtonListList) {
-            for (InlineKeyboardButton inlineKeyboardButton : inlineKeyboardButtonList) {
-                if (inlineKeyboardButton.getCallbackData().equals("Daily_Report_Form")) {
-                    buttonDailyReportFormExist = true;
-                    return;
-                }
 
-            }
 
-        }
-        boolean buttonCall_VolunteerExist = false;
-        for (List<InlineKeyboardButton>inlineKeyboardButtonList: inlineKeyboardButtonListList) {
-            for (InlineKeyboardButton inlineKeyboardButton : inlineKeyboardButtonList) {
-                if (inlineKeyboardButton.getCallbackData().equals("Call_VolunteerExist")) {
-                    buttonCall_VolunteerExist = true;
-                    return;
-                }
 
-            }
 
-        }
-        boolean buttonCancelExist = false;
-        for (List<InlineKeyboardButton>inlineKeyboardButtonList: inlineKeyboardButtonListList) {
-            for (InlineKeyboardButton inlineKeyboardButton : inlineKeyboardButtonList) {
-//                if (inlineKeyboardButton.getCallbackData().equals("/cancel")) {
-//                    buttonCancelExist = true;
-//                    return;
-//                }
-
-            }
-
-        }
-//        boolean buttonDailyReportFormExist;
-//                actualInlineKeyboardMarkup.getKeyboard()//List<List<InlineKeyboardButton>>
-//                .listIterator()//List<InlineKeyboardButton>
-//                .forEachRemaining(
-//                        x->x.listIterator().//InlineKeyboardButton
-//                                forEachRemaining(
-//                                y->y.getCallbackData().contains("Форма ежедневного отчета")));
-        assertTrue(buttonCancelExist);
         assertEquals(textExpected, actualMessage.getText());
-        assertTrue(buttonDailyReportFormExist);
-        assertTrue(buttonCall_VolunteerExist);
+        assertEquals(expectedInlineKeyboardMarkup, actualInlineKeyboardMarkup);
+
 
     }
 
-//    private InlineKeyboardMarkup createKeyboardMarkup(Update update) {
-//        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-//
-//        InlineKeyboardButton dailyReportForm = new InlineKeyboardButton("Форма ежедневного отчета");
-//        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
-//        InlineKeyboardButton cancel = new InlineKeyboardButton("Выход");
-//
-//
-//        dailyReportForm.setCallbackData("Daily_Report_Form");
-//        callVolunteer.setCallbackData("Call_Volunteer");
-//        cancel.setCallbackData("/cancel");
-//
-//        List<InlineKeyboardButton> dailyReportFormList = new ArrayList<>();
-//        dailyReportFormList.add(dailyReportForm);
-//        List<InlineKeyboardButton> callVolunteerList = new ArrayList<>();
-//        callVolunteerList.add(callVolunteer);
-//        List<InlineKeyboardButton> cancelButtonList = new ArrayList<>();
-//        cancelButtonList.add(cancel);
-//
-//        List<List<InlineKeyboardButton>> startButtonList = new ArrayList<>();
-//        startButtonList.add(dailyReportFormList);
-//        startButtonList.add(callVolunteerList);
-//        startButtonList.add(cancelButtonList);
-//
-//        inlineKeyboardMarkup.setKeyboard(startButtonList);
-//        return  inlineKeyboardMarkup;
-//
-//
-//    }
+
+    private InlineKeyboardMarkup createKeyboardMarkup(Update update) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
+        InlineKeyboardButton dailyReportForm = new InlineKeyboardButton("Форма ежедневного отчета");
+        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Оставить контакты и позвать волонтера");
+        InlineKeyboardButton cancel = new InlineKeyboardButton("Выход");
+
+
+        dailyReportForm.setCallbackData("Daily_Report_Form");
+        callVolunteer.setCallbackData("LEAVE_CONTACTS");
+        cancel.setCallbackData("/cancel");
+
+        List<InlineKeyboardButton> dailyReportFormList = new ArrayList<>();
+        dailyReportFormList.add(dailyReportForm);
+        List<InlineKeyboardButton> callVolunteerList = new ArrayList<>();
+        callVolunteerList.add(callVolunteer);
+        List<InlineKeyboardButton> cancelButtonList = new ArrayList<>();
+        cancelButtonList.add(cancel);
+
+        List<List<InlineKeyboardButton>> startButtonList = new ArrayList<>();
+        startButtonList.add(dailyReportFormList);
+        startButtonList.add(callVolunteerList);
+        startButtonList.add(cancelButtonList);
+
+        inlineKeyboardMarkup.setKeyboard(startButtonList);
+        return  inlineKeyboardMarkup;
+
+
+    }
 }

@@ -28,7 +28,7 @@ public class AdopterServiceImpl implements AdopterService {
 
     @Override
     public List<Adopter> findAdoptersOfShelterAnimals(Long shelterId) {
-        return adopterRepository.findAdoptersOfShelterAnimals();
+        return adopterRepository.findAdoptersOfShelterAnimals(shelterId);
     }
 
     public Adopter findById(Long id) {
@@ -77,8 +77,8 @@ public class AdopterServiceImpl implements AdopterService {
             adopter.setTrialPeriod(modifiedTrialPeriod);
             sendEditTrialPeriodMessage(adopter, days);
         }
-        adopterRepository.save(adopter);
-        return adopter;
+
+        return adopterRepository.save(adopter);
     }
 
     private void sendDefaultHappyMessage(Adopter adopter) {

@@ -16,7 +16,13 @@ public class Animal {
 
     private String breed;
     @ManyToOne
-    @JoinColumn(name ="shelter_id")
+    @JoinColumn(name = "shelter_id")
     private Shelter shelter;
+
+    public Animal(Long id, String name, String breed) {
+        this.id = id;
+        this.name = name;
+        this.breed = breed;
+    }
 
 }

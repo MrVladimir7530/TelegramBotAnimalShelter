@@ -1,6 +1,5 @@
 package com.example.telegrambotanimalshelter.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,4 +16,14 @@ public class Subscriber {
     private String phoneNumber;
 
     private String userName;
+
+    public Subscriber() {
+    }
+
+    public Subscriber(Long chatId, String name, String phoneNumber, String userName) {
+        this.chatId = chatId;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.userName = userName;
+    }
 }

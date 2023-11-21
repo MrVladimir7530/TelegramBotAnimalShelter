@@ -1,11 +1,13 @@
 package service;
 
 import com.example.telegrambotanimalshelter.components.VolunteerSendMessageService;
+import com.example.telegrambotanimalshelter.model_services.SubscriberService;
 import com.example.telegrambotanimalshelter.models.Subscriber;
 import com.example.telegrambotanimalshelter.model_services.SubscriberServiceImpl;
 import com.example.telegrambotanimalshelter.services.StartMenu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;
@@ -22,12 +24,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class StartMenuTest {
-    private SubscriberServiceImpl subscriberServiceMock;
+
+    private SubscriberService subscriberServiceMock;
+
     private VolunteerSendMessageService volunteerSendMessageService;
+
     private StartMenu out;
     @BeforeEach
     public void init() {
-        subscriberServiceMock = mock(SubscriberServiceImpl.class);
+        subscriberServiceMock = mock(SubscriberService.class);
         volunteerSendMessageService = mock(VolunteerSendMessageService.class);
         out = new StartMenu(subscriberServiceMock, volunteerSendMessageService);
     }
@@ -35,7 +40,7 @@ public class StartMenuTest {
 
     @Test
     public void shouldCorrectResultFromMethodProcess() {
-        when(subscriberServiceMock.create(any(Subscriber.class))).thenReturn(null);
+        when(subscriberServiceMock.create(any(Subscriber.class))).thenReturn(true);
         Update update = new Update();
         //создаем ссообщение для интеграции в Update
         Message message = new Message();
@@ -71,13 +76,10 @@ public class StartMenuTest {
         InlineKeyboardButton catButton = new InlineKeyboardButton("Приют для кошек");
         InlineKeyboardButton dogButton = new InlineKeyboardButton("Приют для собак");
         InlineKeyboardButton reportButton = new InlineKeyboardButton("Отправить отчет");
-        InlineKeyboardButton volunteerInputButton = new InlineKeyboardButton("Войти как волонтер");
 
         catButton.setCallbackData("CAT");
         dogButton.setCallbackData("DOG");
         reportButton.setCallbackData("REPORT");
-        volunteerInputButton.setCallbackData("VOLUNTEER_INPUT");
-
 
 
         List<InlineKeyboardButton> catButtonList = new ArrayList<>();
@@ -86,17 +88,14 @@ public class StartMenuTest {
         dogButtonList.add(dogButton);
         List<InlineKeyboardButton> reportButtonList = new ArrayList<>();
         reportButtonList.add(reportButton);
-        List<InlineKeyboardButton> volunteerButtonList = new ArrayList<>();
-        reportButtonList.add(volunteerInputButton);
 
         List<List<InlineKeyboardButton>> startButtonList = new ArrayList<>();
         startButtonList.add(catButtonList);
         startButtonList.add(dogButtonList);
         startButtonList.add(reportButtonList);
-        startButtonList.add(volunteerButtonList);
-
 
         inlineKeyboardMarkup.setKeyboard(startButtonList);
-        return  inlineKeyboardMarkup;
+        return inlineKeyboardMarkup;
+
     }
 }

@@ -18,6 +18,13 @@ public class Adopter {
     @JoinColumn(name ="animal_id")
     private Animal animal;
 
+    public Adopter(Long id, Integer trialPeriod, Subscriber subscriber, Animal animal) {
+        this.trialPeriod = trialPeriod;
+        this.id = id;
+        this.subscriber = subscriber;
+        this.animal = animal;
+    }
+
     public Adopter() {
     }
 
