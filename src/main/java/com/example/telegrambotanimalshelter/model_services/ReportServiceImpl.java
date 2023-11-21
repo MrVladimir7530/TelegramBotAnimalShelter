@@ -8,6 +8,7 @@ import com.example.telegrambotanimalshelter.models.Subscriber;
 import com.example.telegrambotanimalshelter.repositories.ReportRepository;
 import com.example.telegrambotanimalshelter.services.CommandHandler;
 import com.example.telegrambotanimalshelter.services.TelegramBot;
+import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Lazy;
@@ -19,7 +20,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -81,25 +81,25 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
 
         LocalDate currentDate = LocalDate.now();
         //Ищем отчет по Усыновителю и текущей дате. Если его нет, создаем новый.
-        if (reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate)!=null){
+        if (reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate) != null) {
             report = reportRepository.findByAdopterIdAndCreationDate(adopter.getId(), currentDate);
 
         } else {
             report = new Report();
         }
 
-        if (update.getMessage().hasPhoto()||update.getMessage().hasDocument()) {
+        if (update.getMessage().hasPhoto() || update.getMessage().hasDocument()) {
             try {
                 report.setPhotoPath(uploadReportPhoto.upload(update));
             } catch (IOException e) {
-                logger.error("Ошибка загрузки фото. "+e.getClass());
+                logger.error("Ошибка загрузки фото. " + e.getClass());
 
                 return "Загрузка фото не удалась. Мы починим это в ближайшее время.";
             }
 
             report.setReport(update.getMessage().getCaption());
 
-        }else {
+        } else {
             report.setReport(update.getMessage().getText());
         }
         report.setCreationDate(currentDate);
@@ -118,6 +118,8 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
                     ". Спасибо за обратную связь";
         }
     }
+
+
     @Scheduled(cron = "0 0 14 * * *")
     public void checkingTheSendingOfTheDailyReport() {
         //получаем связи усыновления, для которых еще не прошел испытательный срок
@@ -126,7 +128,7 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
         List<Adopter> adopterList2 = new ArrayList<>();
         Set<Long> adopterIdListFromTodaySReports = reportRepository.getAdopterIdFromTodaySReport(LocalDate.now());
         String text = "Этот нехороший человек уже 2 дня не отправляет отчет. ";
-        for (Adopter adopter: adopterList) {
+        for (Adopter adopter : adopterList) {
             if (!adopterIdListFromTodaySReports.contains(adopter.getId())) {
                 adopterList2.add(adopter);
 
@@ -141,10 +143,10 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
             int daysHavePassed;
             if (lastReportDate != null) {
                 daysHavePassed = LocalDate.now().compareTo(lastReportDate);
-            } else{
+            } else {
                 daysHavePassed = LocalDate.now().compareTo(adopter.getAdoptionDate());
             }
-                if (daysHavePassed >= 2) {
+            if (daysHavePassed >= 2) {
 
                 Subscriber subscriber = adopter.getSubscriber();
                 String message = text + " " + subscriber.toString();
@@ -168,7 +170,26 @@ public class ReportServiceImpl implements ReportService, CommandHandler {
 
     }
 
+    @Override
+    public int sendWarning(Long chatId, String text) {
+        SendMessage message = new SendMessage();
+        if (text == null) {
+            text = "Дорогой усыновитель, мы заметили, что ты заполняешь отчет не так подробно, как необходимо. " +
+                    "Пожалуйста, подойди ответственнее к этому занятию. " +
+                    "В противном случае волонтеры приюта будут обязаны самолично проверять" +
+                    " условия содержания животного";
+        }
+        message.setText(text);
+        message.setChatId(chatId);
+        try {
+            telegramBot.prepareAndSendMessage(message);
+            return HttpStatus.SC_OK;
+        } catch (Exception e) {
+            return HttpStatus.SC_CONFLICT;
+        }
 
+
+    }
 
 
 }
