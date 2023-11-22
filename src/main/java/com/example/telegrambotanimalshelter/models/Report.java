@@ -30,6 +30,13 @@ public class Report {
         this.adopter = adopter;
 
     }
+    public Report(LocalDate creationDate, String report, Shelter shelter, Adopter adopter) {
+        this.report = report;
+        this.creationDate = creationDate;
+        this.shelter = shelter;
+        this.adopter = adopter;
+
+    }
 
     public Long getId() {
         return id;

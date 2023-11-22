@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 public class AnimalMenu implements CommandHandler {
-    private final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
+    public final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
     Logger log = LoggerFactory.getLogger(AnimalMenu.class);
 
     /**

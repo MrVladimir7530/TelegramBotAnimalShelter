@@ -84,17 +84,18 @@ public class AnimalMenuTest {
 
         InlineKeyboardButton getInfoAboutShelter = new InlineKeyboardButton("Узнать информацию о приюте");
         InlineKeyboardButton informationAboutAnimalAdoption = new InlineKeyboardButton("Как взять животное из приюта");
-        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
+        InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Оставить контакты и позвать волонтера");
 
         if (update.getCallbackQuery().getData().equals("CAT")) {
             getInfoAboutShelter.setCallbackData("CAT_INFO");
+            informationAboutAnimalAdoption.setCallbackData("HOW_TO_TAKE_CAT");
 
         } else {
 
             getInfoAboutShelter.setCallbackData("DOG_INFO");
+            informationAboutAnimalAdoption.setCallbackData("HOW_TO_TAKE_DOG");
         }
-        informationAboutAnimalAdoption.setCallbackData("How_to_take_an_animal");
-        callVolunteer.setCallbackData("Call_Volunteer");
+        callVolunteer.setCallbackData(out.LEAVE_CONTACTS);
 
         List<InlineKeyboardButton> catButtonList = new ArrayList<>();
         catButtonList.add(getInfoAboutShelter);
@@ -109,7 +110,7 @@ public class AnimalMenuTest {
         startButtonList.add(reportButtonList);
 
         inlineKeyboardMarkup.setKeyboard(startButtonList);
-        return inlineKeyboardMarkup;
+        return  inlineKeyboardMarkup;
     }
 
 }
