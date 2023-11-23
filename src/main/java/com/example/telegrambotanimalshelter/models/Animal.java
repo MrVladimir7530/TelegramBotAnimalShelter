@@ -19,6 +19,9 @@ public class Animal {
     @JoinColumn(name = "shelter_id")
     private Shelter shelter;
 
+    public Animal() {
+    }
+
     public Animal(Long id, String name, String breed) {
         this.id = id;
         this.name = name;

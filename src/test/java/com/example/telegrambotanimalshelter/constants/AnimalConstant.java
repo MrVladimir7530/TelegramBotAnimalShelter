@@ -1,4 +1,4 @@
-package constants;
+package com.example.telegrambotanimalshelter.constants;
 
 import com.example.telegrambotanimalshelter.models.Animal;
 

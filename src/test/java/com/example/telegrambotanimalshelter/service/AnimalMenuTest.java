@@ -1,4 +1,4 @@
-package service;
+package com.example.telegrambotanimalshelter.service;
 
 import com.example.telegrambotanimalshelter.services.AnimalMenu;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,9 @@
-package constants;
+package com.example.telegrambotanimalshelter.constants;
 
 import com.example.telegrambotanimalshelter.models.Adopter;
 
-import static constants.AnimalConstant.*;
-import static constants.SubscriberConstant.*;
+import static com.example.telegrambotanimalshelter.constants.AnimalConstant.*;
+import static com.example.telegrambotanimalshelter.constants.SubscriberConstant.*;
 
 public class AdopterConstant {
     public static final Adopter ADOPTER1 = new Adopter(1L,30, SUBSCRIBER1, ANIMAL_CAT1);

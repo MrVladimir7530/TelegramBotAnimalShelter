@@ -1,9 +1,8 @@
-package model_services;
+package com.example.telegrambotanimalshelter.model_services;
 
 import com.example.telegrambotanimalshelter.model_services.AdopterServiceImpl;
 import com.example.telegrambotanimalshelter.repositories.AdopterRepository;
 import com.example.telegrambotanimalshelter.services.TelegramBot;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -12,8 +11,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static constants.AdopterConstant.*;
-import static constants.AdopterServiceConstant.*;
+import static com.example.telegrambotanimalshelter.constants.AdopterConstant.*;
+import static com.example.telegrambotanimalshelter.constants.AdopterServiceConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
