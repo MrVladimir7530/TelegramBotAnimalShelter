@@ -39,7 +39,7 @@ public class ShelterInformationDogServiceTest {
     }
 
     @Test
-    public void test1() {
+    public void processTest1() {
         Update update = getUpdate("INFO_GET_DOG");
         ReflectionTestUtils.setField(shelterInformationDogService, "INFO_GET_DOG_ANSWER", "Как понять, что животное выбрало тебя? Оно захочет убить тебя");
         SendMessage sendMessage = shelterInformationDogService.process(update);
@@ -47,7 +47,7 @@ public class ShelterInformationDogServiceTest {
         assertEquals("Как понять, что животное выбрало тебя? Оно захочет убить тебя", response);
     }
     @Test
-    public void test2() {
+    public void processTest2() {
         Update update = getUpdate("INFO_NEED_DOCUMENTATION_FOR_DOG");
         ReflectionTestUtils.setField(shelterInformationDogService, "INFO_NEED_DOCUMENTATION_FOR_DOG_ANSWER", "возми паспорт, желательно свой");
         SendMessage sendMessage = shelterInformationDogService.process(update);
