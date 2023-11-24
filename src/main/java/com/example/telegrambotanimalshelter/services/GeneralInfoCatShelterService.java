@@ -3,6 +3,7 @@ package com.example.telegrambotanimalshelter.services;
 
 import com.example.telegrambotanimalshelter.models.Shelter;
 import com.example.telegrambotanimalshelter.repositories.ShelterRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
  * Сервис для обработки команд общей информации о приютах
  */
 @Service
+@RequiredArgsConstructor
 public class GeneralInfoCatShelterService implements CommandHandler {
     private final String CAT_INFO = "CAT_INFO";
     private final String GENERAL_INFO_ABOUT_CAT_SHELTER = "GENERAL_INFO_ABOUT_CAT_SHELTER";
@@ -26,11 +28,12 @@ public class GeneralInfoCatShelterService implements CommandHandler {
     private final String SECURITY_INFO_OF_CAT_SHELTER = "SECURITY_INFO_OF_CAT_SHELTER";
     private final String CAT_SAFETY_RECOMMENDATIONS = "CAT_SAFETY_RECOMMENDATIONS";
     private final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
+    private final String CANCEL = "/cancel";
     private final String EXCEPTION = "Команда не распознана";
 
     Logger log = LoggerFactory.getLogger(GeneralInfoCatShelterService.class);
-    @Autowired
-    private ShelterRepository shelterRepository;
+
+    private final ShelterRepository shelterRepository;
 
     /**
      * Метод для обработки входящего сообщения от пользователя и возврата сообщения для отправки
@@ -66,6 +69,7 @@ public class GeneralInfoCatShelterService implements CommandHandler {
         InlineKeyboardButton contactInfoOfShelterSecurity = new InlineKeyboardButton("Контакты охраны для оформления пропуска на авто");
         InlineKeyboardButton generalSafetyRecommendations = new InlineKeyboardButton("Техника безопасности на территории приюта");
         InlineKeyboardButton getAndSaveUserPhone = new InlineKeyboardButton("Оставить контакты для обратной связи");
+        InlineKeyboardButton exit = new InlineKeyboardButton("Вернуться в главное меню");
         //InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
 
         generalInfoAboutShelter.setCallbackData(GENERAL_INFO_ABOUT_CAT_SHELTER);
@@ -74,6 +78,7 @@ public class GeneralInfoCatShelterService implements CommandHandler {
         generalSafetyRecommendations.setCallbackData(CAT_SAFETY_RECOMMENDATIONS);
 
         getAndSaveUserPhone.setCallbackData(LEAVE_CONTACTS);
+        exit.setCallbackData(CANCEL);
         //callVolunteer.setCallbackData("Call_Volunteer");
 
         List<List<InlineKeyboardButton>> rowInline = new ArrayList<>();
@@ -98,9 +103,9 @@ public class GeneralInfoCatShelterService implements CommandHandler {
         rowInline5.add(getAndSaveUserPhone);
         rowInline.add(rowInline5);
 
-//        List<InlineKeyboardButton> rowInline6 = new ArrayList<>();
-//        rowInline6.add(callVolunteer);
-//        rowInline.add(rowInline6);
+        List<InlineKeyboardButton> rowInline6 = new ArrayList<>();
+        rowInline6.add(exit);
+        rowInline.add(rowInline6);
 
         inlineKeyboardMarkup.setKeyboard(rowInline);
 

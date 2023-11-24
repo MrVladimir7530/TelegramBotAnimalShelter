@@ -17,11 +17,14 @@ public class Shelter {
     private String securityContact; //контакты охраны
     private String safetyPrecautions; //техника безопасности
 
-    public Shelter() {
+    public Shelter(long l, String testName, String generalInfo, String info, String securityContact, String safetyPrecautions) {
     }
 
     public Shelter(Long id) {
         this.id = id;
     }
 
+    public Shelter() {
+
+    }
 }

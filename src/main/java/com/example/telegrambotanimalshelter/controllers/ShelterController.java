@@ -42,7 +42,7 @@ public class ShelterController {
             tags = "Shelters"
     )
     @GetMapping
-    public Shelter getShelterByShelterType(@Parameter(example = "Приют кошек / Приют собак") @RequestParam(name = "Типа приюта") String shelterType) {
+    public Shelter getShelterByShelterType(@Parameter(example = "Приют кошек / Приют собак") @RequestParam(name = "Тип приюта") String shelterType) {
         return shelterService.getShelterByShelterType(shelterType);
     }
 
@@ -83,7 +83,7 @@ public class ShelterController {
             },
             tags = "Shelters"
     )
-    @DeleteMapping
+    @DeleteMapping("/{ID}")
     public void deleteShelter(@PathVariable(name = "ID") Long id) {
         shelterService.deleteShelter(id);
     }

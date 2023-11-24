@@ -46,4 +46,5 @@ public class ShelterServiceImpl implements ShelterService {
         log.info("Shelter is deleted by id: {}", id);
         shelterRepository.deleteById(id);
     }
+
 }

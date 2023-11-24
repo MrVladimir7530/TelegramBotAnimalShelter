@@ -26,6 +26,7 @@ public class GeneralInfoDogShelterService implements CommandHandler {
     private final String SECURITY_INFO_OF_DOG_SHELTER = "SECURITY_INFO_OF_DOG_SHELTER";
     private final String DOG_SAFETY_RECOMMENDATIONS = "DOG_SAFETY_RECOMMENDATIONS";
     private final String LEAVE_CONTACTS = "LEAVE_CONTACTS";
+    private final String CANCEL = "/cancel";
     private final String EXCEPTION = "Команда не распознана";
 
     Logger log = LoggerFactory.getLogger(GeneralInfoCatShelterService.class);
@@ -66,6 +67,7 @@ public class GeneralInfoDogShelterService implements CommandHandler {
         InlineKeyboardButton contactInfoOfShelterSecurity = new InlineKeyboardButton("Контакты охраны для оформления пропуска на авто");
         InlineKeyboardButton generalSafetyRecommendations = new InlineKeyboardButton("Техника безопасности на территории приюта");
         InlineKeyboardButton getAndSaveUserPhone = new InlineKeyboardButton("Оставить контакты для обратной связи");
+        InlineKeyboardButton exit = new InlineKeyboardButton("Вернуться в главное меню");
         //InlineKeyboardButton callVolunteer = new InlineKeyboardButton("Позвать волонтера");
 
 
@@ -75,6 +77,7 @@ public class GeneralInfoDogShelterService implements CommandHandler {
         generalSafetyRecommendations.setCallbackData(DOG_SAFETY_RECOMMENDATIONS);
 
         getAndSaveUserPhone.setCallbackData(LEAVE_CONTACTS);
+        exit.setCallbackData(CANCEL);
         //callVolunteer.setCallbackData("Call_Volunteer");
 
         List<List<InlineKeyboardButton>> rowInline = new ArrayList<>();
@@ -99,9 +102,9 @@ public class GeneralInfoDogShelterService implements CommandHandler {
         rowInline5.add(getAndSaveUserPhone);
         rowInline.add(rowInline5);
 
-//        List<InlineKeyboardButton> rowInline6 = new ArrayList<>();
-//        rowInline6.add(callVolunteer);
-//        rowInline.add(rowInline6);
+        List<InlineKeyboardButton> rowInline6 = new ArrayList<>();
+        rowInline6.add(exit);
+        rowInline.add(rowInline6);
 
         inlineKeyboardMarkup.setKeyboard(rowInline);
 
