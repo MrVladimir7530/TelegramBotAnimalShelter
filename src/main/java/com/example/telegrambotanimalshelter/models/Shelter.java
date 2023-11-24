@@ -17,6 +17,9 @@ public class Shelter {
     private String securityContact; //контакты охраны
     private String safetyPrecautions; //техника безопасности
 
+    public Shelter() {
+    }
+
     public Shelter(Long id) {
         this.id = id;
     }

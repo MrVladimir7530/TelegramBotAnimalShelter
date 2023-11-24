@@ -1,4 +1,4 @@
-package constants;
+package com.example.telegrambotanimalshelter.constants;
 
 import org.telegram.telegrambots.meta.api.objects.*;
 

@@ -1,5 +1,7 @@
 package com.example.telegrambotanimalshelter.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -12,10 +14,12 @@ public class Adopter {
     private Integer trialPeriod = 30;
     @OneToOne()
     @JoinColumn(name = "subscriber_id")
+    @JsonIgnore
     private Subscriber subscriber;
 
     @OneToOne()
     @JoinColumn(name ="animal_id")
+    @JsonIgnore
     private Animal animal;
 
     public Adopter(Long id, Integer trialPeriod, Subscriber subscriber, Animal animal) {

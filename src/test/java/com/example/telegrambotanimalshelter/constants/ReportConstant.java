@@ -1,11 +1,11 @@
-package constants;
+package com.example.telegrambotanimalshelter.constants;
 
 import com.example.telegrambotanimalshelter.models.Report;
 
 import java.time.LocalDate;
 
-import static constants.AdopterConstant.*;
-import static constants.ShelterConstant.*;
+import static com.example.telegrambotanimalshelter.constants.AdopterConstant.*;
+import static com.example.telegrambotanimalshelter.constants.ShelterConstant.*;
 
 public class ReportConstant {
 

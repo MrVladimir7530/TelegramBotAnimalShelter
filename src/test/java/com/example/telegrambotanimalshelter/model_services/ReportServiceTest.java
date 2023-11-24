@@ -1,4 +1,4 @@
-package model_services;
+package com.example.telegrambotanimalshelter.model_services;
 
 import com.example.telegrambotanimalshelter.components.VolunteerSendMessageService;
 import com.example.telegrambotanimalshelter.model_services.AdopterService;
@@ -7,21 +7,17 @@ import com.example.telegrambotanimalshelter.model_services.ReportServiceImpl;
 import com.example.telegrambotanimalshelter.model_services.UploadReportPhoto;
 import com.example.telegrambotanimalshelter.repositories.ReportRepository;
 import com.example.telegrambotanimalshelter.services.TelegramBot;
-import constants.AdopterConstant;
-import constants.ReportConstant;
-import constants.ReportServiceTestConstant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Optional;
 
-import static constants.AdopterConstant.*;
-import static constants.ReportConstant.*;
-import static constants.ReportServiceTestConstant.*;
+import static com.example.telegrambotanimalshelter.constants.AdopterConstant.*;
+import static com.example.telegrambotanimalshelter.constants.ReportConstant.*;
+import static com.example.telegrambotanimalshelter.constants.ReportServiceTestConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
