@@ -22,10 +22,11 @@ public class Animal {
     public Animal() {
     }
 
-    public Animal(Long id, String name, String breed) {
+    public Animal(Long id, String name, String breed, Shelter shelter) {
         this.id = id;
         this.name = name;
         this.breed = breed;
+        this.shelter = shelter;
     }
 
 }

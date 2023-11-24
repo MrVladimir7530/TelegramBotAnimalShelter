@@ -74,7 +74,7 @@ public class AdopterController {
             }, tags = "Усыновление"
     )
     @PutMapping
-    public Adopter editTrialPeriod(@RequestParam(name = "Чат ID пользователя") Long adopterId,
+    public Adopter editTrialPeriod(@RequestParam(name = "Чат ID усыновления") Long adopterId,
                                    @RequestParam(name = "Количество добавляемых дней",required = false) Integer days,
                                    @RequestParam(name = "Решение о прохождении испытательного срока",required = false) Boolean probationPeriodPassed) {
         return adopterService.editTrialPeriod(adopterId, days, probationPeriodPassed);
