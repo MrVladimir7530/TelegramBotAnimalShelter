@@ -1,7 +1,5 @@
-package com.example.telegrambotanimalshelter.service;
+package com.example.telegrambotanimalshelter.services;
 
-import com.example.telegrambotanimalshelter.services.ReportButtonAnswerService;
-import com.example.telegrambotanimalshelter.services.TelegramBot;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

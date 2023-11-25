@@ -2,6 +2,7 @@ package com.example.telegrambotanimalshelter.services;
 
 import com.example.telegrambotanimalshelter.models.Shelter;
 import com.example.telegrambotanimalshelter.repositories.ShelterRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.util.List;
  * Сервис для обработки команд общей информации о приютах
  */
 @Service
+@RequiredArgsConstructor
 public class GeneralInfoDogShelterService implements CommandHandler {
 
     private final String DOG_INFO = "DOG_INFO";
@@ -30,8 +32,8 @@ public class GeneralInfoDogShelterService implements CommandHandler {
     private final String EXCEPTION = "Команда не распознана";
 
     Logger log = LoggerFactory.getLogger(GeneralInfoCatShelterService.class);
-    @Autowired
-    private ShelterRepository shelterRepository;
+
+    private final ShelterRepository shelterRepository;
 
     /**
      * Метод для обработки входящего сообщения от пользователя и возврата сообщения для отправки

@@ -28,7 +28,7 @@ public class VolunteerController {
             tags = "Volunteer"
     )
     @GetMapping("/{id}")
-    public ResponseEntity<Volunteer> getVolunteer(@RequestParam Long id) {
+    public ResponseEntity<Volunteer> getVolunteer(@PathVariable Long id) {
         Volunteer volunteer;
         try {
             volunteer = volunteerService.getVolunteer(id);

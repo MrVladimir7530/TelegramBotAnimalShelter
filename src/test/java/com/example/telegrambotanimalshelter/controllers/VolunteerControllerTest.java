@@ -60,12 +60,27 @@ public class VolunteerControllerTest {
 
     }
 
+    @Test
+    public void getVolunteerByIdTest() throws Exception{
+        Volunteer volunteer = createVolunteer();
+        when(volunteerRepository.findById(any(Long.class))).thenReturn(Optional.of(volunteer));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/volunteer/" + volunteer.getChatId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.chatId").value(1L))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.phoneNumber").value(phoneNumber))
+                .andExpect(jsonPath("$.userName").value(userName));
+    }
+
 
     public Volunteer createVolunteer() {
         Volunteer volunteer = new Volunteer();
         volunteer.setChatId(1L);
         volunteer.setName(name);
         volunteer.setUserName(userName);
+        volunteer.setPhoneNumber(phoneNumber);
         return volunteer;
     }
 }
