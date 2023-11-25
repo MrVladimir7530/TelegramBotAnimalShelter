@@ -1,8 +1,7 @@
-package com.example.telegrambotanimalshelter.service;
+package com.example.telegrambotanimalshelter.services;
 
 import com.example.telegrambotanimalshelter.models.DogHandler;
 import com.example.telegrambotanimalshelter.repositories.DogHandlerRepository;
-import com.example.telegrambotanimalshelter.services.ShelterInformationDogService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

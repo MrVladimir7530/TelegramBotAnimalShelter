@@ -1,13 +1,10 @@
-package com.example.telegrambotanimalshelter.service;
+package com.example.telegrambotanimalshelter.services;
 
 import com.example.telegrambotanimalshelter.components.VolunteerSendMessageService;
 import com.example.telegrambotanimalshelter.model_services.SubscriberService;
 import com.example.telegrambotanimalshelter.models.Subscriber;
-import com.example.telegrambotanimalshelter.model_services.SubscriberServiceImpl;
-import com.example.telegrambotanimalshelter.services.StartMenu;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.Message;

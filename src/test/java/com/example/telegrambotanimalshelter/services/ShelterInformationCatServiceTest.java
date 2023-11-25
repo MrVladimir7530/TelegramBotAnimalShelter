@@ -1,6 +1,5 @@
-package com.example.telegrambotanimalshelter.service;
+package com.example.telegrambotanimalshelter.services;
 
-import com.example.telegrambotanimalshelter.services.ShelterInformationCatService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;

@@ -1,8 +1,7 @@
-package com.example.telegrambotanimalshelter.service;
+package com.example.telegrambotanimalshelter.services;
 
 import com.example.telegrambotanimalshelter.models.Shelter;
 import com.example.telegrambotanimalshelter.repositories.ShelterRepository;
-import com.example.telegrambotanimalshelter.services.GeneralInfoCatShelterService;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
@@ -20,18 +19,8 @@ public class GeneralInfoCatShelterServiceTest {
 
     @Test
     public void chooseWayCatInfoTest() {
-        Shelter shelter = new Shelter();
-        shelter.setId(1L);
-        shelter.setName("Приют кошек");
-        when(shelterRepository.findByName(any(String.class))).thenReturn(shelter);
-
-        Update update = new Update();
-        CallbackQuery callbackQuery = new CallbackQuery();
-        User user = new User();
-        user.setId(1L);
-        callbackQuery.setFrom(user);
-        callbackQuery.setData("CAT_INFO");
-        update.setCallbackQuery(callbackQuery);
+        Update update = getUpdate();
+        update.getCallbackQuery().setData("CAT_INFO");
 
         String text = "Вы находитесь с разделе общей информации о приюте кошек. Пожалуйста, выберите, о чем вы бы хотели узнать подробнее";
 
@@ -41,4 +30,33 @@ public class GeneralInfoCatShelterServiceTest {
 
     }
 
+    @Test
+    public void chooseWaySecurityInfoCatTest() {
+        String infoButton = "Контакты охраны";
+        Shelter shelter = new Shelter();
+        shelter.setId(1L);
+        shelter.setName("Приют кошек");
+        shelter.setSecurityContact(infoButton);
+        when(shelterRepository.findByName(any(String.class))).thenReturn(shelter);
+
+        Update update = getUpdate();
+        update.getCallbackQuery().setData("SECURITY_INFO_OF_CAT_SHELTER");
+
+        String expected = infoButton;
+
+        SendMessage result = generalInfoCatShelterService.process(update);
+
+        Assertions.assertEquals(expected, result.getText());
+    }
+
+    public Update getUpdate() {
+        Update update = new Update();
+        CallbackQuery callbackQuery = new CallbackQuery();
+        User user = new User();
+        user.setId(1L);
+        callbackQuery.setFrom(user);
+        update.setCallbackQuery(callbackQuery);
+
+        return update;
+    }
 }
