@@ -1,4 +1,4 @@
-package service;
+package com.example.telegrambotanimalshelter.service;
 
 import com.example.telegrambotanimalshelter.models.DogHandler;
 import com.example.telegrambotanimalshelter.repositories.DogHandlerRepository;

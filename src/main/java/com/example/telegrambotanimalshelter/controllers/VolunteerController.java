@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * Контроллер позволяющий добавлять, удалять и получать волонтеров из БД
  */
 @RestController
-@RequestMapping("volunteer")
+@RequestMapping("/volunteer")
 @RequiredArgsConstructor
 public class VolunteerController {
     private final VolunteerService volunteerService;
@@ -27,11 +27,11 @@ public class VolunteerController {
             },
             tags = "Volunteer"
     )
-    @GetMapping
-    public ResponseEntity<Volunteer> getVolunteer(@RequestParam Long chatId) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Volunteer> getVolunteer(@RequestParam Long id) {
         Volunteer volunteer;
         try {
-            volunteer = volunteerService.getVolunteer(chatId);
+            volunteer = volunteerService.getVolunteer(id);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
