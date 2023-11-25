@@ -47,7 +47,6 @@ public class ShelterControllerWebMvcTest {
         Shelter shelter = createShelter();
 
         when(shelterRepository.save(any(Shelter.class))).thenReturn(shelter);
-        when(shelterRepository.findByName("TestName")).thenReturn(shelter);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/shelter")
@@ -64,7 +63,7 @@ public class ShelterControllerWebMvcTest {
     }
 
     @Test
-    public void getShelterByIdTest() throws Exception{
+    public void getShelterByNameTest() throws Exception{
         Shelter shelter = createShelter();
         String name = shelter.getName();
         when(shelterRepository.findByName(any(String.class))).thenReturn(shelter);

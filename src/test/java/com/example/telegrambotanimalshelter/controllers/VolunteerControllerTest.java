@@ -74,6 +74,12 @@ public class VolunteerControllerTest {
                 .andExpect(jsonPath("$.userName").value(userName));
     }
 
+    @Test
+    public void deleteVolunteerByIdTest() throws Exception{
+        mockMvc.perform(MockMvcRequestBuilders.delete("/volunteer?chatId=1"))
+                .andExpect(status().isOk());
+    }
+
 
     public Volunteer createVolunteer() {
         Volunteer volunteer = new Volunteer();
